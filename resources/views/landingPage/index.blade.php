@@ -99,13 +99,13 @@
                             <div class="col-xl-3 col-lg-4 col-sm-6 col-12 mb--30">
                                 <div class="axil-product product-style-one">
                                     <div class="thumbnail">
-                                        <a href="single-product.html">
+                                        <a href="#">
                                             <img src="{{ asset('product/'. $item->image)}}" alt="Product Images">
                                         </a>
                                         <div class="product-hover-action">
                                             <ul class="cart-action">
                                                 <li class="quickview"><a href="#" data-bs-toggle="modal" data-bs-target="#quick-view-modal-{{ $item->id }}"><i class="far fa-eye"></i></a></li>
-                                                <li class="select-option"><a href="single-product.html">Select Option</a></li>
+                                                {{-- <li class="select-option"><a href="single-product.html">Select Option</a></li> --}}
                                                 {{-- <li class="wishlist"><a href="wishlist.html"><i class="far fa-heart"></i></a></li> --}}
                                             </ul>
                                         </div>
