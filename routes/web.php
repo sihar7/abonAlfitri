@@ -14,6 +14,8 @@ use App\Http\Controllers\Product\{
     WishlistController
 };
 
+use App\Http\Controllers\Payment\PaymentCallbackController;
+
 
 
 /*
@@ -46,5 +48,5 @@ Route::group(['middleware' => ['web', 'auth', 'has_login']], function () {
     Route::get('/wishlist', [WishlistController::class, 'wishlist'])->name('landingPage.wishlist');
     Route::post('favorite-add/{id}', [WishlistController::class, 'favoriteAdd'])->name('favorite.add');
     Route::delete('favorite-remove/{id}', [WishlistController::class, 'favoriteRemove'])->name('favorite.remove');
-
+    Route::post('payments/midtrans-notification', [PaymentCallbackController::class, 'receive']);
 });
