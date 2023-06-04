@@ -30,16 +30,22 @@ class HomeController extends Controller
 
     function wishlist()
     {
-        return view('landingPage.wishlist');
+        $data['product'] = Product::where('slideActive', 0)
+        ->get();
+        return view('landingPage.wishlist', $data);
     }
 
     function about()
     {
-        return view('landingPage.about');
+        $data['product'] = Product::where('slideActive', 0)
+        ->get();
+        return view('landingPage.about', $data);
     }
 
     function virtualOutlet()
     {
-        return view('landingPage.404');
+        $data['product'] = Product::where('slideActive', 0)
+        ->get();
+        return view('landingPage.404', $data);
     }
 }

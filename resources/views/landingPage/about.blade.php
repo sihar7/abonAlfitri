@@ -175,69 +175,9 @@ Abon Alfitri | Beranda
     </div>
 </div>
 <!-- End Team Area  -->
-
-<!-- Start About Area  -->
-<div class="axil-about-area about-style-2">
-    <div class="container">
-        <div class="row align-items-center mb--80 mb_sm--60">
-            <div class="col-lg-5">
-                <div class="about-thumbnail">
-                    <img src="assets/images/about/about-02.png" alt="about">
-                </div>
-            </div>
-            <div class="col-lg-7">
-                <div class="about-content content-right">
-                    <span class="subtitle">Features #01</span>
-                    <h4 class="title">Solutions that work together</h4>
-                    <p>Publish your eCommerce site quickly with our easy-to-use store builder— no
-                        coding required. Migrate your items from your point of sale system or turn your
-                        Instagram feed into a shopping site and start selling fast. Square Online works
-                        for all kinds of businesses—retail, restaurants, services.</p>
-                    <a href="contact.html" class="axil-btn btn-outline">Get In Touch</a>
-                </div>
-            </div>
-        </div>
-        <div class="row align-items-center">
-            <div class="col-lg-5 order-lg-2">
-                <div class="about-thumbnail">
-                    <img src="assets/images/about/about-03.png" alt="about">
-                </div>
-            </div>
-            <div class="col-lg-7 order-lg-1">
-                <div class="about-content content-left">
-                    <span class="subtitle">Features #01</span>
-                    <h4 class="title">Solutions that work together</h4>
-                    <p>Publish your eCommerce site quickly with our easy-to-use store builder— no
-                        coding required. Migrate your items from your point of sale system or turn your
-                        Instagram feed into a shopping site and start selling fast. Square Online works
-                        for all kinds of businesses—retail, restaurants, services.</p>
-                    <a href="contact.html" class="axil-btn btn-outline">Get In Touch</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- End About Area  -->
-
-<!-- Start Axil Newsletter Area  -->
-<div class="axil-newsletter-area axil-section-gap">
-    <div class="container">
-        <div class="etrade-newsletter-wrapper bg_image bg_image--5">
-            <div class="newsletter-content">
-                <span class="title-highlighter highlighter-primary2"><i class="fas fa-envelope-open"></i>Newsletter</span>
-                <h2 class="title mb--40 mb_sm--30">Get weekly update</h2>
-                <div class="input-group newsletter-form">
-                    <div class="position-relative newsletter-inner mb--15">
-                        <input placeholder="example@gmail.com" type="text">
-                    </div>
-                    <button type="submit" class="axil-btn mb--15">Subscribe</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End .container -->
-</div>
-<!-- End Axil Newsletter Area  -->
+<br>
+<br>
+<br>
 @endsection
 
 @push('customjs')
