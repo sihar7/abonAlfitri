@@ -12,8 +12,8 @@
                         <div class="col-lg-7 mb--40">
                             <div class="row">
                                 <div class="col-lg-10 order-lg-2">
-                                    <div class="single-product-thumbnail product-large-thumbnail axil-product thumbnail-badge zoom-gallery slick-initialized slick-slider">
-                                        <div class="thumbnail">
+                                    <div class="single-product-thumbnail product-large-thumbnail axil-product thumbnail-badge zoom-gallery">
+                                        <div class="thumbnail thumbnail slick-slide slick-current slick-active">
                                             <img src="{{ URL::to('product/'. $item->image)}}" alt="Product Images">
                                             <div class="product-quick-view position-view">
                                                 <a href="{{ URL::to('product/'. $item->image)}}" class="popup-zoom">
@@ -24,7 +24,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-2 order-lg-1">
-                                    <div class="product-small-thumb small-thumb-wrapper slick-initialized slick-slider slick-vertical ">
+                                    <div class="product-small-thumb small-thumb-wrapper slick-slider slick-vertical ">
                                         <div class="small-thumb-img slick-slide slick-current slick-active">
                                             <img src="{{ URL::to('product/'. $item->image)}}" alt="thumb image">
                                         </div>
@@ -35,7 +35,7 @@
                         <div class="col-lg-5 mb--40">
                             <div class="single-product-content">
                                 <div class="inner">
-                                    <h3 class="product-title">Serif Coffee Table</h3>
+                                    <h3 class="product-title">{{ $item->name }}</h3>
                                     <span class="price-amount">{{ "Rp " . number_format($item->priceDisc, 0, ",", ".") }} - {{ "Rp" . number_format($item->price, 0, ",", ".") }}</span>
                                     <ul class="product-meta">
                                         <li><i class="fal fa-check"></i>In stock</li>

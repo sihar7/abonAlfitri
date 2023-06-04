@@ -89,20 +89,10 @@
                         </div>
                         <div class="product-content">
                             <div class="inner">
-                                <h5 class="title"><a href="single-product.html">{{ $item->name }}</a></h5>
+                                <h5 class="title"><a href="{{ url("") }}">{{ $item->name }}</a></h5>
                                 <div class="product-price-variant">
                                     <span class="price current-price">{{ "Rp " . number_format($item->priceDisc, 0, ",", ".") }}</span>
                                     <span class="price old-price">{{ "Rp" . number_format($item->price, 0, ",", ".") }}</span>
-                                </div>
-                                <div class="color-variant-wrapper">
-                                    <ul class="color-variant">
-                                        <li class="color-extra-01 active"><span><span class="color"></span></span>
-                                        </li>
-                                        <li class="color-extra-02"><span><span class="color"></span></span>
-                                        </li>
-                                        <li class="color-extra-03"><span><span class="color"></span></span>
-                                        </li>
-                                    </ul>
                                 </div>
                             </div>
                         </div>

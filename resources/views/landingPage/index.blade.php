@@ -104,11 +104,11 @@
                                         </a>
                                         <div class="product-hover-action">
                                             <ul class="cart-action">
-                                                <li class="quickview"><a href="#" data-bs-toggle="modal" data-bs-target="#quick-view-modal-{{ $item->id }}"><i class="far fa-eye"></i></a></li>
-                                                {{-- <li class="select-option"><a href="single-product.html">Select Option</a></li> --}}
-                                                {{-- <li class="wishlist"><a href="wishlist.html"><i class="far fa-heart"></i></a></li> --}}
-                                            </ul>
-                                        </div>
+                                                    <li class="quickview"><a href="#" data-bs-toggle="modal" data-bs-target="#quick-view-modal-{{ $item->id }}"><i class="far fa-eye"></i></a></li>
+                                                    {{-- <li class="select-option"><a href="single-product.html">Select Option</a></li> --}}
+                                                    {{-- <li class="wishlist"><a href="wishlist.html"><i class="far fa-heart"></i></a></li> --}}
+                                                </ul>
+                                            </div>
                                     </div>
                                     <div class="product-content">
                                         <div class="inner">
@@ -137,100 +137,6 @@
             </div>
         </div>
         <!-- End Expolre Product Area  -->
-
-        <!-- Start Why Choose Area  -->
-        <div class="axil-why-choose-area pb--50 pb_sm--30">
-            <div class="container">
-                <div class="section-title-wrapper section-title-center">
-                    <span class="title-highlighter highlighter-secondary"><i class="fal fa-thumbs-up"></i>Why Us</span>
-                    <h2 class="title">Why People Choose Us</h2>
-                </div>
-                <div class="row row-cols-xl-5 row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1 row--20">
-                    <div class="col">
-                        <div class="service-box">
-                            <div class="icon">
-                                <img src="{{ asset('assets/images/icons/service6.png')}}" alt="Service">
-                            </div>
-                            <h6 class="title">Fast &amp; Secure Delivery</h6>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="service-box">
-                            <div class="icon">
-                                <img src="{{ asset('assets/images/icons/service7.png')}}" alt="Service">
-                            </div>
-                            <h6 class="title">100% Guarantee On Product</h6>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="service-box">
-                            <div class="icon">
-                                <img src="{{ asset('assets/images/icons/service8.png')}}" alt="Service">
-                            </div>
-                            <h6 class="title">24 Hour Return Policy</h6>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="service-box">
-                            <div class="icon">
-                                <img src="{{ asset('assets/images/icons/service9.png')}}" alt="Service">
-                            </div>
-                            <h6 class="title">24 Hour Return Policy</h6>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="service-box">
-                            <div class="icon">
-                                <img src="{{ asset('assets/images/icons/service10.png')}}" alt="Service">
-                            </div>
-                            <h6 class="title">Next Level Pro Quality</h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- End Why Choose Area  -->
-
-
-        <!-- Start Axil Product Poster Area  -->
-        <div class="axil-poster">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6 mb--30">
-                        <div class="single-poster">
-                            <a href="shop.html">
-                                <img src="{{ asset('assets/images/product/poster/poster-01.png')}}" alt="eTrade promotion poster">
-                                <div class="poster-content">
-                                    <div class="inner">
-                                        <h3 class="title">Rich sound, <br> for less.</h3>
-                                        <span class="sub-title">Collections <i class="fal fa-long-arrow-right"></i></span>
-                                    </div>
-                                </div>
-                                <!-- End .poster-content -->
-                            </a>
-                        </div>
-                        <!-- End .single-poster -->
-                    </div>
-                    <div class="col-lg-6 mb--30">
-                        <div class="single-poster">
-                            <a href="shop-sidebar.html">
-                                <img src="{{ asset('assets/images/product/poster/poster-02.png')}}" alt="eTrade promotion poster">
-                                <div class="poster-content content-left">
-                                    <div class="inner">
-                                        <span class="sub-title">50% Offer In Winter</span>
-                                        <h3 class="title">Get VR <br> Reality Glass</h3>
-                                    </div>
-                                </div>
-                                <!-- End .poster-content -->
-                            </a>
-                        </div>
-                        <!-- End .single-poster -->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- End Axil Product Poster Area  -->
-
         
 @endsection
 
