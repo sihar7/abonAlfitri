@@ -40,7 +40,7 @@
         <div class="signin-header">
             <div class="row align-items-center">
                 <div class="col-md-6">
-                    <a href="index.html" class="site-logo"><img src="{{ asset('logo/logoAlfitri.png')}}"  style="width: 157px; height:auto;" alt="logo"></a>
+                    <a href="{{ url('register') }}" class="site-logo responsive"><img src="{{ asset('logo/logoAlfitri.png')}}"  style="width: 70px; height:auto;" alt="logo"></a>
                 </div>
                 <div class="col-md-6">
                     <div class="singin-header-btn">
@@ -65,8 +65,8 @@
                         <form class="singin-form" id="data-master" method="post">
                             @csrf
                             <div class="form-group">
-                                <label>User Name</label>
-                                <input type="text" class="form-control" name="username">
+                                <label>Name</label>
+                                <input type="text" class="form-control" name="name">
                             </div>
                             <div class="form-group">
                                 <label>Email</label>
@@ -179,8 +179,6 @@
                             icon: 'warning',
                             text: 'Email Telah Digunakan !',
                         });
-                        
-                        window.location.href=`{{ url('admin/listGuru') }}`;
                     } else if (response.status == 3) {
                         Toast.fire({
                             icon: 'warning',

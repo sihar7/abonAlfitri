@@ -13,10 +13,11 @@ class CreateProductTable extends Migration
      */
     public function up()
     {
-        Schema::create('mst_product', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->double('price');
+            $table->double('priceDisc');
             $table->text('description');
             $table->string('image');
             $table->integer('slideActive');

@@ -75,11 +75,11 @@
                                     <i class="flaticon-magnifying-glass"></i>
                                 </a>
                             </li>
-                            <li class="wishlist">
+                            {{-- <li class="wishlist">
                                 <a class="{{ request()->is('/wishlist') ? 'active' : '' }}" href="{{ url('/wishlist') }}">
                                     <i class="flaticon-heart"></i>
                                 </a>
-                            </li>
+                            </li> --}}
                             <li class="shopping-cart">
                                 <a href="#" class="cart-dropdown-btn">
                                     <span class="cart-count">3</span>

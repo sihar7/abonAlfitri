@@ -4,15 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Maize\Markable\Markable;
-use Maize\Markable\Models\Favorite;
-class Product extends Model
+
+class OrderItem extends Model
 {
     use HasFactory;
-
+    
     protected $guarded = [];
 
-    protected static $marks = [
-        Favorite::class,
-    ];
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
 }

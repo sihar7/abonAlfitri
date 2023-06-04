@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Session;
+use App\Models\Role;
 
 class AuthController extends Controller
 {
@@ -99,6 +100,8 @@ class AuthController extends Controller
 
     function postRegister(Request $request)
     {
+        
+        $newToken = $this->generateRandomString();
         if ($request->password == $request->confirm_password) {
             $cek_email = User::whereEmail($request->email)->count();
             if ($cek_email == 0) {
@@ -113,11 +116,7 @@ class AuthController extends Controller
                 $user->last_login = null;
                 $user->save();
 
-                if ($request->role == 0) {    
-                    $user->roles()->attach(Role::where('name', 'admin')->first());
-                } else {
-                    $user->roles()->attach(Role::where('name', 'user')->first());
-                }
+                $user->roles()->attach(Role::where('name', 'user')->first());
                 return response()->json(['status' => 1], 201);
                 // Berhasil
             } else {

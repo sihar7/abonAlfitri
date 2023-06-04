@@ -16,13 +16,16 @@ class HomeController extends Controller
 {
     function index()
     {
-        $data['product'] = Product::all();
+        $data['product'] = Product::where('slideActive', 0)
+        ->limit(8)->get();
         return view('landingPage.index', $data);
     }
 
     function shop()
     {
-        return view('landingPage.shop');
+        $data['product'] = Product::where('slideActive', 0)
+        ->get();
+        return view('landingPage.shop', $data);
     }
 
     function wishlist()

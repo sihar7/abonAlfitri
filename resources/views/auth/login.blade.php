@@ -38,7 +38,7 @@
         <div class="signin-header">
             <div class="row align-items-center">
                 <div class="col-sm-4">
-                    <a href="index.html" class="site-logo"><img src="{{ asset('logo/logoAlfitri.png')}}" style="width: 157px; height:auto;" alt="logo"></a>
+                    <a href="index.html" class="site-logo"><img src="{{ asset('logo/logoAlfitri.png')}}" style="width: 70px; height:auto;" alt="logo"></a>
                 </div>
                 <div class="col-sm-8">
                     <div class="singin-header-btn">

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Payment;
 
-use App\Http\Controllers\Controller;
+use App\Models\Order;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Services\Midtrans\CallbackService;
-
-class PaymentController extends Controller
+class PaymentCallbackController extends Controller
 {
     public function receive()
     {

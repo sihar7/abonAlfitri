@@ -16,7 +16,7 @@
                             <div class="slider-content-activation-one">
                                 <div class="single-slide slick-slide" data-sal="slide-up" data-sal-delay="400" data-sal-duration="800">
                                     <span class="subtitle"><i class="fas fa-fire"></i> Promo Terbaik Di Minggu Ini</span>
-                                    <h1 class="title">Abon 100 Gram</h1>
+                                    <h3 class="title">Abon 100 Gram</h3>
                                     <div class="slide-action">
                                         <div class="shop-btn">
                                             <a href="{{ url('/shop') }}" class="axil-btn btn-bg-white"><i class="fal fa-shopping-cart"></i>Beli Sekarang</a>
@@ -95,37 +95,37 @@
                     <!-- End .slick-single-layout -->
                     <div class="slick-single-layout">
                         <div class="row row--15">
+                            @foreach ($product as $item)
                             <div class="col-xl-3 col-lg-4 col-sm-6 col-12 mb--30">
                                 <div class="axil-product product-style-one">
                                     <div class="thumbnail">
                                         <a href="single-product.html">
-                                            <img src="{{ asset('assets/images/product/electric/product-01.png')}}" alt="Product Images">
+                                            <img src="{{ asset('product/'. $item->image)}}" alt="Product Images">
                                         </a>
-                                        <div class="label-block label-right">
-                                            <div class="product-badget">20% Off</div>
-                                        </div>
                                         <div class="product-hover-action">
                                             <ul class="cart-action">
-                                                <li class="quickview"><a href="#" data-bs-toggle="modal" data-bs-target="#quick-view-modal"><i class="far fa-eye"></i></a></li>
+                                                <li class="quickview"><a href="#" data-bs-toggle="modal" data-bs-target="#quick-view-modal-{{ $item->id }}"><i class="far fa-eye"></i></a></li>
                                                 <li class="select-option"><a href="single-product.html">Select Option</a></li>
-                                                <li class="wishlist"><a href="wishlist.html"><i class="far fa-heart"></i></a></li>
+                                                {{-- <li class="wishlist"><a href="wishlist.html"><i class="far fa-heart"></i></a></li> --}}
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="product-content">
                                         <div class="inner">
-                                            <h5 class="title"><a href="single-product.html">Yantiti Leather & Canvas Bags</a></h5>
+                                            <h5 class="title"><a href="single-product.html">{{ $item->name }}</a></h5>
                                             <div class="product-price-variant">
-                                                <span class="price current-price">$29.99</span>
-                                                <span class="price old-price">$49.99</span>
+                                                <span class="price current-price">{{ "Rp " . number_format($item->priceDisc, 0, ",", ".") }}</span>
+                                                <span class="price old-price">{{ "Rp" . number_format($item->price, 0, ",", ".") }}</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                
                             </div>
-
+                            @endforeach
                         </div>
                     </div>
+                    
                     <!-- End .slick-single-layout -->
                 </div>
                 <div class="row">
@@ -230,6 +230,8 @@
             </div>
         </div>
         <!-- End Axil Product Poster Area  -->
+
+        
 @endsection
 
 @push('customjs')

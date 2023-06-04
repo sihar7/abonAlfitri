@@ -46,6 +46,7 @@ Route::group(['middleware' => ['web', 'auth', 'has_login']], function () {
         
     });
 
+    Route::resource('orders', OrderController::class)->only(['index', 'show']);
     Route::get('/wishlist', [WishlistController::class, 'wishlist'])->name('landingPage.wishlist');
     Route::post('favorite-add/{id}', [WishlistController::class, 'favoriteAdd'])->name('favorite.add');
     Route::delete('favorite-remove/{id}', [WishlistController::class, 'favoriteRemove'])->name('favorite.remove');

@@ -14,11 +14,25 @@ class CreateOrdersTable extends Migration
     public function up()
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->id();
-            $table->string('number', 16);
-            $table->decimal('total_price', 10, 2);
-            $table->enum('payment_status', ['1', '2', '3', '4'])->comment('1=menunggu pembayaran, 2=sudah dibayar, 3=kadaluarsa, 4=batal');
+            $table->bigIncrements('id');
+            $table->string('order_number')->unique();
+            $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('snap_token', 36)->nullable();
+            $table->enum('status', ['pending', 'processing', 'completed', 'decline'])->default('pending');
+            $table->decimal('grand_total', 20, 6);
+            $table->unsignedInteger('item_count');
+
+            $table->boolean('payment_status')->default(1);
+            $table->string('payment_method')->nullable();
+
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->text('address');
+            $table->string('city');
+            $table->string('country');
+            $table->string('post_code');
+            $table->string('phone_number');
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }
