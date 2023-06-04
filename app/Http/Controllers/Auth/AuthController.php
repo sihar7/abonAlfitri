@@ -16,12 +16,13 @@ class AuthController extends Controller
 {
     function index()
     {
-
+        return view('auth.login');
     }
 
     function register()
     {
 
+        return view('auth.register');
     }
 
     function postLogin(Request $request)
