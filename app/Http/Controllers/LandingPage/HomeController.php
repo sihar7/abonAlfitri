@@ -8,6 +8,7 @@ use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
+use App\Models\AboutUs;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Carbon;
@@ -39,6 +40,7 @@ class HomeController extends Controller
     {
         $data['product'] = Product::where('slideActive', 0)
         ->get();
+        $data['about_us'] = AboutUs::limit(1)->orderBy('created_at', 'DESC')->get();
         return view('landingPage.about', $data);
     }
 
