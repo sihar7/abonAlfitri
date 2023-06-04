@@ -33,6 +33,7 @@ use App\Http\Controllers\Payment\PaymentCallbackController;
 Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::get('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/postLogin', [AuthController::class, 'postLogin']);
+Route::post('/postRegister', [AuthController::class, 'postRegister']);
 Route::post('/logout', [AuthController::class, 'logout']);
 
 Route::get('/', [HomeController::class, 'index'])->name('landingPage.home');

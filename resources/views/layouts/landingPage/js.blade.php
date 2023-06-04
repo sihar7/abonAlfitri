@@ -20,6 +20,7 @@
         <script src="{{ asset('assets/js/vendor/counterup.js')}}"></script>
         <script src="{{ asset('assets/js/vendor/waypoints.min.js')}}"></script>
     
+        <script src="{{ asset('alert/js/sweetalert.js') }}"></script>
         @stack('customjs')
         <!-- Main JS -->
         <script src="{{ asset('assets/js/main.js')}}"></script>
