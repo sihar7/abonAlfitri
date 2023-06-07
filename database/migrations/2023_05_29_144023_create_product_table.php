@@ -19,8 +19,10 @@ class CreateProductTable extends Migration
             $table->double('price');
             $table->double('priceDisc');
             $table->text('description');
+            $table->integer('quantity');
             $table->string('image');
             $table->integer('slideActive');
+            $table->integer('status');
             $table->timestamps();
         });
     }

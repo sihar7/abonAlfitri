@@ -1,6 +1,6 @@
 @extends('layouts.landingPage.master')
 @push('title')
-    Abon Alfitri | Beranda
+    Abon Alfitri | Home
 @endpush
 
 @push('customcss')
@@ -25,7 +25,7 @@
                                 </div>
                                 <div class="single-slide slick-slide">
                                     <span class="subtitle"><i class="fas fa-fire"></i> Promo Terbaik Di Minggu Ini</span>
-                                    <h1 class="title">Smart Digital Watch</h1>
+                                    <h1 class="title">Abon 50 Gram</h1>
                                     <div class="slide-action">
                                         <div class="shop-btn">
                                             <a href="{{ url('/shop') }}" class="axil-btn btn-bg-white"><i class="fal fa-shopping-cart"></i>Shop Now</a>
@@ -34,7 +34,7 @@
                                 </div>
                                 <div class="single-slide slick-slide">
                                     <span class="subtitle"><i class="fas fa-fire"></i> Promo Terbaik Di Minggu Ini</span>
-                                    <h1 class="title">Roco Wireless Headphone</h1>
+                                    <h1 class="title">Abon 20 Gram</h1>
                                     <div class="slide-action">
                                         <div class="shop-btn">
                                             <a href="{{ url('/shop') }}" class="axil-btn btn-bg-white"><i class="fal fa-shopping-cart"></i>Shop Now</a>
@@ -138,6 +138,56 @@
         </div>
         <!-- End Expolre Product Area  -->
         
+    <div class="service-area">
+        <div class="container">
+            <div class="row row-cols-xl-4 row-cols-sm-2 row-cols-1 row--20">
+                <div class="col">
+                    <div class="service-box service-style-2">
+                        <div class="icon">
+                            <img src="{{ asset('assets/images/icons/service1.png')}}" alt="Service">
+                        </div>
+                        <div class="content">
+                            <h6 class="title">Fast &amp; Secure Delivery</h6>
+                            <p>Tell about your service.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="service-box service-style-2">
+                        <div class="icon">
+                            <img src="{{ asset('assets/images/icons/service2.png')}}" alt="Service">
+                        </div>
+                        <div class="content">
+                            <h6 class="title">Money Back Guarantee</h6>
+                            <p>Within 10 days.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="service-box service-style-2">
+                        <div class="icon">
+                            <img src="{{ asset('assets/images/icons/service3.png')}}" alt="Service">
+                        </div>
+                        <div class="content">
+                            <h6 class="title">24 Hour Return Policy</h6>
+                            <p>No question ask.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="service-box service-style-2">
+                        <div class="icon">
+                            <img src="{{ asset('assets/images/icons/service4.png')}}" alt="Service">
+                        </div>
+                        <div class="content">
+                            <h6 class="title">Pro Quality Support</h6>
+                            <p>24/7 Live support.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('customjs')

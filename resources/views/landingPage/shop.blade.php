@@ -22,13 +22,6 @@
                         <h1 class="title">Explore All Products</h1>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-4">
-                    <div class="inner">
-                        <div class="bradcrumb-thumb">
-                            <img src="assets/images/product/product-45.png" alt="Image">
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -41,19 +34,7 @@
                     <div class="axil-shop-top">
                         <div class="row">
                             <div class="col-lg-9">
-                                <div class="category-select">
-
-                                    <!-- Start Single Select  -->
-                                    <select class="single-select">
-                                        <option>Price Range</option>
-                                        <option>0 - 100</option>
-                                        <option>100 - 500</option>
-                                        <option>500 - 1000</option>
-                                        <option>1000 - 1500</option>
-                                    </select>
-                                    <!-- End Single Select  -->
-
-                                </div>
+                               
                             </div>
                             <div class="col-lg-3">
                                 <div class="category-select mt_md--10 mt_sm--10 justify-content-lg-end">
@@ -82,7 +63,7 @@
                             <div class="product-hover-action">
                                 <ul class="cart-action">
                                     <!-- <li class="wishlist"><a href="wishlist.html"><i class="far fa-heart"></i></a></li> -->
-                                    <li class="select-option"><a href="cart.html">Add to Cart</a></li>
+                                    <li class="select-option"><a href="{{ url('/cart/buy', base64_encode($item->id)) }}">Add to Cart</a></li>
                                     <li class="quickview"><a href="#" data-bs-toggle="modal" data-bs-target="#quick-view-modal-{{ $item->id }}"><i class="far fa-eye"></i></a></li>
                                 </ul>
                             </div>

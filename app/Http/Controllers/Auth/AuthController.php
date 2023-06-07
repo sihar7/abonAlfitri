@@ -130,7 +130,7 @@ class AuthController extends Controller
        }
     }
 
-    function logout(Request $request)
+    function logout()
     {
         $user = User::whereId(Auth::id())->first();
         $user->alredy_login = 0;
