@@ -44,8 +44,8 @@
                 </div>
                 <div class="col-md-6">
                     <div class="singin-header-btn">
-                        <p>Already a member?</p>
-                        <a href="{{ url('login') }}" class="axil-btn btn-bg-secondary sign-up-btn">Log In</a>
+                        <p>Sudah Punya akun ?</p>
+                        <a href="{{ url('login') }}" class="axil-btn btn-bg-secondary sign-up-btn">Masuk</a>
                     </div>
                 </div>
             </div>
@@ -60,12 +60,12 @@
             <div class="col-lg-6 offset-xl-2">
                 <div class="axil-signin-form-wrap">
                     <div class="axil-signin-form">
-                        <h3 class="title">I'm New Here</h3>
-                        <p class="b2 mb--55">Enter your detail below</p>
+                        <h3 class="title">Saya baru disini</h3>
+                        <p class="b2 mb--55">Masukkan detail Anda di bawah ini</p>
                         <form class="singin-form" id="data-master" method="post">
                             @csrf
                             <div class="form-group">
-                                <label>Name</label>
+                                <label>Nama</label>
                                 <input type="text" class="form-control" name="name">
                             </div>
                             <div class="form-group">
@@ -77,12 +77,12 @@
                                 <input type="password" class="form-control" name="password">
                             </div>
                             <div class="form-group">
-                                <label>Confirm Password</label>
+                                <label>Konfirmasi Password</label>
                                 <input type="password" class="form-control" name="confirm_password">
                             </div>
                             
                             <div class="form-group">
-                                <button type="submit" class="axil-btn btn-bg-primary submit-btn" id="simpan-data" >Create Account</button>
+                                <button type="submit" class="axil-btn btn-bg-primary submit-btn" id="simpan-data" >Buat Akun</button>
                             </div>
                         </form>
                     </div>
@@ -164,7 +164,7 @@
                 processData: false,
                 success: function (response) {
                     $("#jenis_menuHelp").html("");
-                    $('#simpan-data').html("Create Account");
+                    $('#simpan-data').html("Buat Akun");
                     $('#simpan-data').removeAttr('disabled');
                     if (response.status == 1) {
                         Swal.fire({
@@ -191,7 +191,7 @@
                         icon: 'error',
                         title: 'Gagal Registrasi Akun !'
                     });
-                    $('#simpan-data').html(`Create Account`);
+                    $('#simpan-data').html(`Buat Akun`);
                     $('#simpan-data').removeAttr('disabled');
 
                 }
@@ -199,7 +199,16 @@
         });
     });
   </script>
-  
+   <script type="text/javascript">
+    function disableSelection(e){if(typeof e.onselectstart!="undefined")e.onselectstart=function(){return false};else if(typeof e.style.MozUserSelect!="undefined")e.style.MozUserSelect="none";else e.onmousedown=function(){return false};e.style.cursor="default"}window.onload=function(){disableSelection(document.body)}
+    </script>
+    <script type="text/javascript">
+    window.addEventListener("keydown",function(e){if(e.ctrlKey&&(e.which==65||e.which==66||e.which==67||e.which==73||e.which==80||e.which==83||e.which==85||e.which==86)){e.preventDefault()}});document.keypress=function(e){if(e.ctrlKey&&(e.which==65||e.which==66||e.which==67||e.which==73||e.which==80||e.which==83||e.which==85||e.which==86)){}return false}
+    </script>
+    <script type="text/javascript">
+    document.onkeydown=function(e){e=e||window.event;if(e.keyCode==123||e.keyCode==18){return false}}
+    </script>
+
   <script src="{{ asset('assets/js/main.js')}}"></script>
 </body>
 </html>

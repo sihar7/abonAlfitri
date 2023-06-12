@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Services\Midtrans\CreateSnapTokenService;
+use Illuminate\Support\Facades\Auth;
 class OrderController extends Controller
 {
     /**
@@ -15,9 +16,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::all();
+        $orders = Order::where('user_id', Auth::user()->id)->get();
 
-        return view('orders.index', compact('orders'));
+        return view('landingPage.orders.index', compact('orders'));
     }
 
     /**
@@ -47,7 +48,7 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Order $order)
     {
         $snapToken = $order->snap_token;
         if (is_null($snapToken)) {
@@ -60,7 +61,7 @@ class OrderController extends Controller
             $order->save();
         }
 
-        return view('orders.show', compact('order', 'snapToken'));
+        return view('landingPage.orders.show', compact('order', 'snapToken'));
     }
 
     /**

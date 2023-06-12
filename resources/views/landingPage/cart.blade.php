@@ -14,56 +14,63 @@ Abon Alfitri | Cart
             <form method="post" id="data-master">
                 @csrf
                 <div class="product-table-heading">
-                    <h4 class="title">Your Cart</h4>
-                    <a href="#" class="cart-clear">Clear Shoping Cart</a>
+                    <h4 class="title">Keranjang Anda</h4>
+                    <a href="{{ url('cart/clearAll') }}" class="cart-clear">Hapus Keranjang Belanja</a>
                 </div>
                 <div class="table-responsive">
                     <table class="table axil-product-table axil-cart-table mb--40" id="tableCart">
                         <thead>
                             <tr>
                                 <th scope="col" class="product-remove"></th>
-                                <th scope="col" class="product-thumbnail">Product</th>
+                                <th scope="col" class="product-thumbnail">Produk</th>
                                 <th scope="col" class="product-title"></th>
-                                <th scope="col" class="product-price">Price</th>
-                                <th scope="col" class="product-quantity">Quantity</th>
+                                <th scope="col" class="product-price">Harga</th>
+                                <th scope="col" class="product-quantity">Kuantitas</th>
                                 <th scope="col" class="product-subtotal">Subtotal</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @php $total = 0; @endphp
-                            @foreach($cart as $item)
-                            @php $total += $item['product']->priceDisc * $item['quantity']; @endphp
+                            @foreach ($cart as $item)
                             <tr>
                                 <td class="product-remove"><a
                                         href="#"
-                                        class="remove-wishlist" data-id="{{ base64_encode($item['product']->id) }}"  id="buton_delete"><i class="fal fa-times"></i></a></td>
-                                <td class="product-thumbnail"><img src="{{ asset('product/'. $item['product']->image)}}"
+                                        class="remove-wishlist" data-id="{{ base64_encode($item->id) }}"  id="buton_delete"><i class="fal fa-times"></i></a></td>
+                                <td class="product-thumbnail"><img src="{{ asset('product/'. $item->attributes->image) }}"
                                         alt="Digital Product"></td>
-                                <td class="product-title"><a href="#">{{$item['product']->name}}</a>
+                                <td class="product-title"><a href="#">{{ $item->name }}</a>
                                 </td>
                                 <td class="product-price" data-title="Price">
-                                    {{ "Rp " . number_format($item['product']->priceDisc, 0, ",", ".") }}</td>
+                                    {{ "Rp " . number_format($item->price, 0, ",", ".") }}</td>
                                 <td class="product-quantity" data-title="Qty">
                                     <div class="pro-qty">
                                         <input type="number" class="quantity-input" min="1"
-                                            value="{{$item['quantity']}}" name="quantity[]">
+                                            value="{{ $item->quantity }}" name="quantity">
                                     </div>
                                 </td>
-                                <td class="product-subtotal" data-title="Subtotal"><span
-                                        class="currency-symbol">{{ "Rp. " . number_format($item['product']->priceDisc * $item['quantity'], 0, ",", ".") }}</td>
+                                <td class="product-price" data-title="Price">
+                                    {{ "Rp " . number_format($item->price * $item->quantity, 0, ",", ".") }}</td>
                             </tr>
+                            
+                            <input type="hidden" name="id" value="{{ base64_encode($item->id) }}">
                             @endforeach
                         </tbody>
+                        
+                        <tr>
+                            <tr>
+                                <td colspan="5" align="right">Total</td>
+                                <td>{{ "Rp. " . number_format(Cart::session(Auth::user()->id)->getTotal(), 0, ",", ".") }}</td>
+                            </tr>
+                        </tr>
                     </table>
                 </div>
                 <br>
                 <div class="cart-update-btn-area">
-                    {{-- <div class="input-group product-cupon">
-                        <input placeholder="Enter coupon code" type="text">
+                    <div class="input-group product-cupon">
+                        {{-- <input placeholder="Enter coupon code" type="text">
                         <div class="product-cupon-btn">
                             <button type="submit" class="axil-btn btn-outline">Apply</button>
-                        </div>
-                    </div> --}}
+                        </div> --}}
+                    </div>
                     <div class="update-btn">
                         <input type="submit" id="updateCart" class="axil-btn btn-outline" value="Update Cart">
                     </div>
@@ -71,22 +78,22 @@ Abon Alfitri | Cart
                 <div class="row">
                     <div class="col-xl-5 col-lg-7 offset-xl-7 offset-lg-5">
                         <div class="axil-order-summery mt--80">
-                            <h5 class="title mb--20">Order Summary</h5>
+                            <h5 class="title mb--20">Ringkasan Pesanan</h5>
                             <div class="summery-table-wrap">
                                 <table class="table summery-table mb--30">
                                     <tbody>
                                         <tr class="order-subtotal">
                                             <td>Subtotal</td>
-                                            <td>{{ "Rp. " . number_format($total, 0, ",", ".") }}</td>
+                                            <td>{{ "Rp. " . number_format(Cart::session(Auth::user()->id)->getTotal(), 0, ",", ".") }}</td>
                                         </tr>
                                         <tr class="order-total">
                                             <td>Total</td>
-                                            <td class="order-total-amount">{{ "Rp. " . number_format($total, 0, ",", ".") }}</td>
+                                            <td class="order-total-amount">{{ "Rp. " . number_format(Cart::session(Auth::user()->id)->getTotal(), 0, ",", ".") }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <a href="checkout.html" class="axil-btn btn-bg-primary checkout-btn">Process to Checkout</a>
+                            <a href="{{ url('checkout') }}" class="axil-btn btn-bg-primary checkout-btn">Checkout</a>
                         </div>
                     </div>
                 </div>
@@ -96,8 +103,6 @@ Abon Alfitri | Cart
     </div>
 </div>
 <!-- End Cart Area  -->
-
-
 @endsection
 
 @push('customjs')
@@ -140,17 +145,33 @@ Abon Alfitri | Cart
                 cache: false,
                 contentType: false,
                 processData: false,
+                beforeSend: function()
+                {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Mohon Tunggu !',
+                        html: 'Memperbaharui...',// add html attribute if you want or remove
+                        allowOutsideClick: false,
+                        onBeforeOpen: () => {
+                            Swal.showLoading()
+                        },
+                    });
+                },
                 success: function (response) {
+                    
+                    swal.close();
                     $("#jenis_menuHelp").html("");
-                    $('#simpan-data').val("Update Cart");
-                    $('#simpan-data').removeAttr('disabled');
+                    $('#updateCart').val("Update Cart");
+                    $('#updateCart').removeAttr('disabled');
                     if (response.status == 1) {
                         $('#updateCart').val(`Update Cart`);
                         $('#updateCart').removeAttr('disabled');
-                        window.location.reload();
+                        window.location.reload();   
                     }
                 },
                 error: function (e) {
+                    
+                    swal.close();
                     Toast.fire({
                         icon: 'error',
                         title: 'Gagal !'
@@ -162,47 +183,6 @@ Abon Alfitri | Cart
             });
         });
 
-        $(this).on('click', '#buton_delete', function (e) {
-            e.preventDefault();
-            let id = $(this).data('id');
-            Swal.fire({
-                title: 'Peringatan',
-                text: "Apakah anda yakin akan menghapus pesanan ?",
-                icon: 'warning',
-                showCancelButton: true,
-                buttonsStyling: true,
-                confirmButtonClass: 'btn btn-danger btn-lg mr-2',
-                cancelButtonClass: 'btn btn-primary btn-lg',
-                confirmButtonText: 'Hapus <i class="fas fa-trash"></i>',
-                cancelButtonText: 'Batal <i class="fas fa-close"> </i>'
-            }).then((result) => {
-                if (result.value) {
-                    $.ajax({
-                        type: "GET",
-                        url: `{{url('cart/remove')}}/${id}`,
-                        data: {
-                            _token: '{{csrf_token()}}'
-                        },
-                        dataType: "json",
-                        success: function (response) {         
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Berhasil',
-                                text: 'Pesanan Berhasil Dihapus !',
-                            });
-                            
-                            window.location.reload();
-                        },
-                        error: function () {
-                            Toast.fire({
-                                icon: 'error',
-                                title: 'Gagal Menghapus Pesanan!'
-                            })
-                        }
-                    });
-                }
-            })
-        });
     });
 </script>
 @endpush

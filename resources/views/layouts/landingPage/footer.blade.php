@@ -8,7 +8,7 @@
                      <!-- Start Single Widget  -->
                      <div class="col-lg-3 col-sm-6">
                         <div class="axil-footer-widget">
-                            <h2 class="widget-title">About Us</h2>
+                            <h2 class="widget-title">Tentang Kami</h2>
                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident fugiat quibusdam saepe harum quidem
                               dolorem.</p>
                         </div>
@@ -17,7 +17,7 @@
                     <!-- Start Single Widget  -->
                     <div class="col-lg-3 col-sm-6">
                         <div class="axil-footer-widget">
-                            <h5 class="widget-title">Support</h5>
+                            <h5 class="widget-title">Mendukung</h5>
                             <div class="logo mb--30">
                             <a href="index.html">
                                 <img class="light-logo" src="{{ asset('logo/logoAlfitri.png')}}" alt="Logo Images">

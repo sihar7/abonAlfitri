@@ -80,12 +80,23 @@
                                     <i class="flaticon-heart"></i>
                                 </a>
                             </li> --}}
+                            
+                            @if(Illuminate\Support\Facades\Auth::check())
                             <li class="shopping-cart">
                                 <a href="#" class="cart-dropdown-btn">
-                                    <span class="cart-count">{{ count((array) session('cart')) }}</span>
+                                    <span class="cart-count">{{ Cart::getTotalQuantity()}}</span>
                                     <i class="flaticon-shopping-cart"></i>
                                 </a>
                             </li>
+                            @else
+
+                            <li class="shopping-cart">
+                                <a href="#" class="cart-dropdown-btn0">
+                                    <span class="cart-count"></span>
+                                    <i class="flaticon-shopping-cart"></i>
+                                </a>
+                            </li>
+                            @endif
                             <li class="my-account">
                                 <a href="javascript:void(0)">
                                     <i class="flaticon-person"></i>
@@ -95,7 +106,7 @@
                                     @if(Illuminate\Support\Facades\Auth::check())
                                     <ul>
                                         <li>
-                                            <a href="#"><span>{{ Auth::user()->name }}</span></a>
+                                            <a href="{{ url('account') }}"><span>Akun ( {{ Auth::user()->name }} )</span></a>
                                         </li>
                                         <li>                                        
                                             <a href="{{ url('logout') }}" class="axil-btn btn-bg-primary">Logout</a>

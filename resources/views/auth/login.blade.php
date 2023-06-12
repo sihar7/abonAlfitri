@@ -42,8 +42,8 @@
                 </div>
                 <div class="col-sm-8">
                     <div class="singin-header-btn">
-                        <p>Not a member?</p>
-                        <a href="{{ url('/register') }}" class="axil-btn btn-bg-secondary sign-up-btn">Sign Up Now</a>
+                        <p>Belum daftar?</p>
+                        <a href="{{ url('/register') }}" class="axil-btn btn-bg-secondary sign-up-btn">Daftar sekarang</a>
                     </div>
                 </div>
             </div>
@@ -58,8 +58,8 @@
             <div class="col-lg-6 offset-xl-2">
                 <div class="axil-signin-form-wrap">
                     <div class="axil-signin-form">
-                        <h3 class="title">Log In to Abon Alfitri.</h3>
-                        <p class="b2 mb--55">Enter your detail below</p>
+                        <h3 class="title">Masuk ke Abon Alfitri.</h3>
+                        <p class="b2 mb--55">Masukkan detail Anda di bawah ini</p>
                         <form class="singin-form" id="formLogin" method="post">
                             @csrf
                             <div class="form-group">
@@ -71,7 +71,7 @@
                                 <input type="password" class="form-control" name="password" placeholder="">
                             </div>
                             <div class="form-group d-flex align-items-center justify-content-between">
-                                <button type="submit" class="axil-btn btn-bg-primary submit-btn" id="button_login">Log In</button>
+                                <button type="submit" class="axil-btn btn-bg-primary submit-btn" id="button_login">Masuk</button>
                                 {{-- <a href="forgot-password.html" class="forgot-btn">Forget password?</a> --}}
                             </div>
                         </form>
@@ -139,7 +139,7 @@
                         $('#button_login').attr('disabled', true);
                     },
                     success: function (response) {
-                        $('#button_login').html("Log In");
+                        $('#button_login').html("Masuk");
                         $('#button_login').removeAttr('disabled');
 
                         if (response.message == 1) {
@@ -171,9 +171,19 @@
                                 icon: 'warning',
                                 title: 'Email Atau Password Salah !'
                             })
-                        } else if (response.message == 7) {
+                        } else if (response.message == 7) { 
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                text: 'Berhasil Login Admin!',
+                            });
                             window.location.href = `{{  url('admin') }}`;
                         } else if (response.message == 8) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                text: 'Berhasil Login !',
+                            });
                             window.location.href = `{{  url('/') }}`;
                         } else {
                             Toast.fire({
@@ -185,13 +195,23 @@
                     complete: function () {
                         reset();
                         $('#button_login').removeAttr('disabled');
-                        $('#button_login').html("Log In");
+                        $('#button_login').html("Masuk");
                     }
                 });
             });
         });
 
     </script>
+     <script type="text/javascript">
+        function disableSelection(e){if(typeof e.onselectstart!="undefined")e.onselectstart=function(){return false};else if(typeof e.style.MozUserSelect!="undefined")e.style.MozUserSelect="none";else e.onmousedown=function(){return false};e.style.cursor="default"}window.onload=function(){disableSelection(document.body)}
+        </script>
+        <script type="text/javascript">
+        window.addEventListener("keydown",function(e){if(e.ctrlKey&&(e.which==65||e.which==66||e.which==67||e.which==73||e.which==80||e.which==83||e.which==85||e.which==86)){e.preventDefault()}});document.keypress=function(e){if(e.ctrlKey&&(e.which==65||e.which==66||e.which==67||e.which==73||e.which==80||e.which==83||e.which==85||e.which==86)){}return false}
+        </script>
+        <script type="text/javascript">
+        document.onkeydown=function(e){e=e||window.event;if(e.keyCode==123||e.keyCode==18){return false}}
+        </script>
+
     <!-- Main JS -->
     <script src="{{ asset('assets/js/main.js')}}"></script>
 

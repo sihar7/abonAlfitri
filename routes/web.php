@@ -11,11 +11,16 @@ use App\Http\Controllers\LandingPage\{
 };
 use App\Http\Controllers\Product\{
     ProductController,
-    WishlistController,
-    CartController
+    OrderController,
+    CartController,
+    CityController
 };
 
-use App\Http\Controllers\Payment\PaymentCallbackController;
+use App\Http\Controllers\Payment\{
+    PaymentCallbackController,
+    CheckoutController,
+    InvoiceController
+};
 
 
 
@@ -42,6 +47,25 @@ Route::get('/shop', [HomeController::class, 'shop'])->name('landingPage.shop');
 Route::get('/story', [HomeController::class, 'about'])->name('landingPage.about');
 Route::get('/virtualOutlet', [HomeController::class, 'virtualOutlet'])->name('landingPage.virtual');
 
+Route::get('/product/modal/{id}', [ProductController::class, 'getData']);
+Route::get('search', [ProductController::class, 'search']);
+
+
+Route::get('/getKabupaten/{id}', [CityController::class, 'getKabupaten']);
+Route::get('/getKecamatan/{id}', [CityController::class, 'getKecamatan']);
+Route::get('/getKelurahan/{id}', [CityController::class, 'getKelurahan']);
+
+Route::prefix('cart')->group(function() {
+    Route::get('/', [CartController::class, 'index']);
+    Route::get('/index', [CartController::class, 'index']);
+    Route::post('/buy/{id}', [CartController::class, 'buy']);
+    Route::post('/buyButton', [CartController::class, 'buyButton']);
+    Route::get('/remove/{id}', [CartController::class, 'remove']);
+    Route::get('/removeTroli/{id}', [CartController::class, 'removeTroli']);
+    Route::post('/update', [CartController::class, 'update']);
+    Route::get('/clearAll', [CartController::class, 'clearAll']);
+});
+
 Route::group(['middleware' => ['web', 'auth', 'has_login']], function () {
     Route::prefix('admin')->group(function() {
         
@@ -52,13 +76,16 @@ Route::group(['middleware' => ['web', 'auth', 'has_login']], function () {
     // Route::get('/wishlist', [WishlistController::class, 'wishlist'])->name('landingPage.wishlist');
     // Route::post('favorite-add/{id}', [WishlistController::class, 'favoriteAdd'])->name('favorite.add');
     // Route::delete('favorite-remove/{id}', [WishlistController::class, 'favoriteRemove'])->name('favorite.remove');
-    
-    Route::prefix('cart')->group(function() {
-        Route::get('/', [CartController::class, 'index']);
-        Route::get('/index', [CartController::class, 'index']);
-        Route::get('/buy/{id}', [CartController::class, 'buy']);
-        Route::get('/remove/{id}', [CartController::class, 'remove']);
-        Route::post('/update', [CartController::class, 'update']);
-        Route::get('/clearAll', [CartController::class, 'clearAll']);
+
+    Route::prefix('account')->group(function() {
+        Route::get('/', [AuthController::class, 'account']);
+        Route::post('change-password', [AuthController::class, 'changePassword'])->name('change.password');
+        Route::get('/invoice/generate/{idOrder}', [InvoiceController::class, 'generate']);
+        
+    });
+
+    Route::prefix('checkout')->group(function() {
+        Route::get('/', [CheckoutController::class, 'checkout']);
+        Route::post('/postCheckout', [CheckoutController::class, 'postCheckout']);
     });
 });

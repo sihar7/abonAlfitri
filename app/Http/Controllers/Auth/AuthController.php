@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Session;
 use App\Models\Role;
-
+use App\Models\Order;
+use App\Rules\MatchOldPassword;
 class AuthController extends Controller
 {
     function index()
@@ -150,5 +151,25 @@ class AuthController extends Controller
             $str .= $karakkter[rand(0, $panjang_karakter - 1)];
         }
         return $str;
+    }
+
+    function changePassword(Request $request)
+    {
+        $request->validate([
+            'password' => ['required', new MatchOldPassword],
+            'newPassword' => ['required'],
+            'confirmNewPassword' => ['same:newPassword'],
+        ]);
+        $name = $request->first_name .' '. $request->last_name;
+        User::find(auth()->user()->id)->update(['name' => $name,'password'=> Hash::make($request->newPassword)]);
+        
+        return redirect()->back();
+    }
+
+    function account()
+    {
+        $data['orders'] = Order::where('user_id', Auth::user()->id)->get();
+
+        return view('landingPage.account.index', $data);
     }
 }
