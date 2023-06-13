@@ -411,7 +411,6 @@
                 </tr>
             </thead>
             <tbody>
-                
                 @foreach($order as $item)
                 <tr>
                     <td><a class="cut">-</a><span contenteditable>{{ $item->name_product }}</span></td>

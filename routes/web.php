@@ -22,7 +22,10 @@ use App\Http\Controllers\Payment\{
     InvoiceController
 };
 
-
+use App\Http\Controllers\Admin\{
+    DashboardController,
+    OrdersController
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -55,6 +58,10 @@ Route::get('/getKabupaten/{id}', [CityController::class, 'getKabupaten']);
 Route::get('/getKecamatan/{id}', [CityController::class, 'getKecamatan']);
 Route::get('/getKelurahan/{id}', [CityController::class, 'getKelurahan']);
 
+Route::get('/admin', function () {
+    return view('admin.auth.login');
+});
+
 Route::prefix('cart')->group(function() {
     Route::get('/', [CartController::class, 'index']);
     Route::get('/index', [CartController::class, 'index']);
@@ -67,8 +74,12 @@ Route::prefix('cart')->group(function() {
 });
 
 Route::group(['middleware' => ['web', 'auth', 'has_login']], function () {
-    Route::prefix('admin')->group(function() {
-        
+
+    Route::group(['middleware' => ['admin']], function () {
+        Route::prefix('admin')->group(function() {
+            Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+            Route::get('/orders', [OrdersController::class, 'index']);
+        });
     });
 
     Route::resource('orders', OrderController::class)->only(['index', 'show']);

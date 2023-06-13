@@ -56,11 +56,11 @@ class AuthController extends Controller
                     if ($request->user()->hasRole('admin')) {
                         $user                 = User::cekEmail($email);
                         $user->alredy_login   = 1;
-                        $user->api_token      = 'USER_TOKEN_'.$newToken;
+                        $user->api_token      = 'ADMIN_TOKEN_'.$newToken;
                         $user->last_login     = now();
                         $user->save();
 
-                        Auth::login($cek_user, $remember_me);
+                        Auth::login($user, $remember_me);
                         
                         return response()->json(['message' => 1], 201);
                         //Sukses Login Admin
@@ -70,12 +70,15 @@ class AuthController extends Controller
                         $user->api_token      = 'USER_TOKEN_'.$newToken;
                         $user->last_login     = now();
                         $user->save();
-                        Auth::login($cek_user, $remember_me);
+                        Auth::login($user, $remember_me);
                         
                         return response()->json(['message' => 2], 201);
                         //Sukses Login User
                     }
-                } elseif ($alredy_login == 1) {
+                } else if ($is_active == null || $is_active == 0) {
+                    return response()->json(['message' => 4], 202);
+                    //User sudah tidak aktif
+                }  elseif ($alredy_login == 1) {
                     if ($request->user()->hasRole('admin')) {
                         // ini kondisikalo user login terus maumasuklagi jadiga alredy login
                         return response()->json(['message' => 7], 201);
@@ -85,10 +88,7 @@ class AuthController extends Controller
                         return response()->json(['message' => 3], 202);
                         //User Sedang Login
                     }
-                } else if ($is_active == null || $is_active == 0) {
-                    return response()->json(['message' => 4], 202);
-                    //User sudah tidak aktif
-                } 
+                }
                 
             } else {
                 return response()->json(['message' => 5], 202);
@@ -111,7 +111,7 @@ class AuthController extends Controller
                 $user->email = $request->email;
                 $user->password = Hash::make($request->password);
                 $user->api_token = 'USER_TOKEN_'.$newToken;
-                $user->is_active = 0;
+                $user->is_active = 1;
                 $user->avatar = 'default.png';
                 $user->alredy_login = 0;
                 $user->last_login = null;

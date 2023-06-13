@@ -141,15 +141,7 @@
                     success: function (response) {
                         $('#button_login').html("Masuk");
                         $('#button_login').removeAttr('disabled');
-
-                        if (response.message == 1) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Berhasil',
-                                text: 'Berhasil Login Admin!',
-                            });
-                            window.location.href = `{{  url('admin') }}`;
-                        } else if (response.message == 2) {
+                       if (response.message == 2) {
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Berhasil',
@@ -171,14 +163,7 @@
                                 icon: 'warning',
                                 title: 'Email Atau Password Salah !'
                             })
-                        } else if (response.message == 7) { 
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Berhasil',
-                                text: 'Berhasil Login Admin!',
-                            });
-                            window.location.href = `{{  url('admin') }}`;
-                        } else if (response.message == 8) {
+                        }else if (response.message == 8) {
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Berhasil',
