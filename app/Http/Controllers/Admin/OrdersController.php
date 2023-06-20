@@ -28,7 +28,7 @@ class OrdersController extends Controller
                     if ($data->payment_status == 1) {
                         return '<span class="badge badge-info">Menunggu Pembayaran</span>'. '&nbsp'.'<a href="#" class="btn btn-success" data-id="'.$data->id.'" id="buttonAccept"><i class="fa-solid fa-check me-2"></i> Konfirmasi Pembayaran</a>';;
                     } elseif($data->payment_status == 2) {
-                        return '<span class="badge badge-success">Sudah Dibayar</span>'. '&nbsp'. ' <a href="#" data-id="'.$data->id.'" class="btn btn-primary" data-order="'.$data->order_number.'" id="buton_generate"><i class="fas fa-download"></i> Invoice</a>'.'&nbsp;'.'<a href="#" class="btn btn-success" data-id="'.$data->id.'" id="buttonAccept"><i class="fa-solid fa-check me-2"></i> Konfirmasi Pembayaran</a>';
+                        return '<span class="badge badge-success">Sudah Dibayar</span>'. '&nbsp'. ' <a href="#" data-id="'.$data->id.'" class="btn btn-primary" data-order="'.$data->order_number.'" id="buton_generate"><i class="fas fa-download"></i> Invoice</a>';
                     } elseif($data->payment_status == 5) {
                         return '<span class="badge badge-info">Bayar Cod</span>'. '&nbsp'. ' <a href="#" data-id="'.$data->id.'" class="btn btn-primary" data-order="'.$data->order_number.'" id="buton_generate"><i class="fas fa-download"></i> Invoice</a>'. '&nbsp'. '<a href="#" class="btn btn-success" data-id="'.$data->id.'" id="buttonAccept"><i class="fa-solid fa-check me-2"></i> Konfirmasi Pembayaran</a>';
                     } elseif($data->payment_status == 4) {
