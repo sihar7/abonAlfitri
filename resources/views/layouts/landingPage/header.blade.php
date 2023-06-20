@@ -63,7 +63,6 @@
                                 <li><a class="{{ request()->is('/') ? 'active' : '' }}" href="{{ url('/') }}">HOME</a></li>
                                 <li><a class="{{ request()->is('shop') ? 'active' : '' }}" href="{{ url('/shop') }}">SHOP</a></li>
                                 <li><a class="{{ request()->is('story') ? 'active' : '' }}" href="{{ url('/story') }}">STORY</a></li>
-                                <li><a class="{{ request()->is('virtualOutlet') ? 'active' : '' }}" href="{{ url('/virtualOutlet') }}">VIRTUAL OUTLET</a></li>
                             </ul>
                         </nav>
                         <!-- End Mainmanu Nav -->
@@ -106,7 +105,7 @@
                                     @if(Illuminate\Support\Facades\Auth::check())
                                     <ul>
                                         <li>
-                                            <a href="{{ url('account') }}"><span>Akun ( {{ Auth::user()->name }} )</span></a>
+                                            <a href="{{ url('account') }}"><span>My Account</span></a>
                                         </li>
                                         <li>                                        
                                             <a href="{{ url('logout') }}" class="axil-btn btn-bg-primary">Logout</a>

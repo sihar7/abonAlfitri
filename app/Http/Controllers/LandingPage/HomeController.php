@@ -79,18 +79,27 @@ class HomeController extends Controller
         { 
             $data = [
                 'cart' => \Cart::session(Auth::user()->id)->getContent(),
-                'product' => Product::where('slideActive', 0)
-                ->limit(8)->get()
+                'product' => Product::where('slideActive', 0)        
+                ->where('status', 1)
+                ->limit(8)->get(),
+                'slide' => Product::where('slideActive', 1)        
+                ->where('status', 1)
+                ->limit(3)->get()
             ];
         } else {
             
-        $data = [
-            'cart' => null,
-            'product' => Product::where('slideActive', 0)
-            ->limit(8)->get()
-        ];
+            $data = [
+                'cart' => null,
+                'product' => Product::where('slideActive', 0)        
+                ->where('status', 1)
+                ->limit(8)->get(),
+                'slide' => Product::where('slideActive', 1)        
+                    ->where('status', 1)
+                    ->limit(3)->get(),
+            ];
         }
-        
+        $data['about_us'] = AboutUs::limit(1)->orderBy('created_at', 'DESC')
+        ->where('status', 1)->get();
         return view('landingPage/index')->with($data);
     }
 
@@ -102,7 +111,8 @@ class HomeController extends Controller
         } else {
             $data = $this->cartProductGlobalNonUSer();
         }
-        
+        $data['about_us'] = AboutUs::limit(1)->orderBy('created_at', 'DESC')
+        ->where('status', 1)->get();
         return view('landingPage.shop', $data);
     }
 
@@ -114,6 +124,8 @@ class HomeController extends Controller
         } else {
             $data = $this->cartProductGlobalNonUSer();
         }
+        $data['about_us'] = AboutUs::limit(1)->orderBy('created_at', 'DESC')
+        ->where('status', 1)->get();
         return view('landingPage.wishlist', $data);
     }
 
@@ -125,7 +137,8 @@ class HomeController extends Controller
         } else {
             $data = $this->cartProductGlobalNonUSer();
         }
-        $data['about_us'] = AboutUs::limit(1)->orderBy('created_at', 'DESC')->get();
+        $data['about_us'] = AboutUs::limit(1)->orderBy('created_at', 'DESC')
+        ->where('status', 1)->get();
         return view('landingPage.about', $data);
     }
 
@@ -137,6 +150,7 @@ class HomeController extends Controller
         } else {
             $data = $this->cartProductGlobalNonUSer();
         }
+        
         return view('landingPage.404', $data);
     }
 }

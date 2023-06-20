@@ -19,7 +19,7 @@ Abon Alfitri | Beranda
                         <li class="separator"></li>
                         <li class="axil-breadcrumb-item active" aria-current="page">Shop</li>
                     </ul>
-                    <h1 class="title">Jelajahi Semua Produk</h1>
+                    <h1 class="title">Shop</h1>
                 </div>
             </div>
         </div>
@@ -60,15 +60,13 @@ Abon Alfitri | Beranda
                 <div class="col-xl-3 col-lg-4 col-sm-6">
                     <div class="axil-product product-style-one has-color-pick mt--40">
                         <div class="thumbnail">
-                            <a href="#">
+                            <a href="{{ url('product/getProduct/details', base64_encode($item->id)) }}">
                                 <img src="{{ asset('product/'. $item->image)}}" alt="Product Images">
                             </a>
                             <div class="product-hover-action">
                                 <ul class="cart-action">
-                                    <!-- <li class="wishlist"><a href="wishlist.html"><i class="far fa-heart"></i></a></li> -->
-                                    {{-- <li class="select-option"> <input type="submit" id="button_create_troli"
-                                            class="axil-btn btn-bg-primary" value="Tambahkan Keranjang"></li> --}}
-                                    <li class="quickview"><a href="#" data-bs-toggle="modal"
+                                    <li class="select-option"><a href="#" data-id="{{ base64_encode($item->id) }}" id="button_create_troli_detail">Add To Cart</a></li>
+                                    <li class="quickview"><a href="{{ url('product/getProduct/details', base64_encode($item->id)) }}" data-bs-toggle="modal"
                                             data-bs-target="#quick-view-modal" data-id="{{ base64_encode($item->id) }}"
                                             id="button_add"><i class="far fa-eye"></i></a></li>
                                 </ul>
@@ -81,7 +79,7 @@ Abon Alfitri | Beranda
                         </div>
                         <div class="product-content">
                             <div class="inner">
-                                <h5 class="title"><a href="{{ url("") }}">{{ $item->name }}</a></h5>
+                                <h5 class="title"><a href="{{ url('product/getProduct/details', base64_encode($item->id)) }}">{{ $item->name }}</a></h5>
                                 <div class="product-price-variant">
                                     <span
                                         class="price current-price">{{ "Rp " . number_format($item->priceDisc, 0, ",", ".") }}</span>

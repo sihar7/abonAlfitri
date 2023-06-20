@@ -66,9 +66,7 @@
         ***********************************-->
         <div class="content-body">
 			<div class="container">
-				<div class="row">
-					@yield('content')
-				</div>
+                @yield('content')
 			</div>
 		
 		</div>

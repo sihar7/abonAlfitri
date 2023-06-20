@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Payment;
 
-use App\Models\Order;
+use App\Models\Product;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Midtrans\CallbackService;
@@ -20,6 +21,13 @@ class PaymentCallbackController extends Controller
                 Order::where('id', $order->id)->update([
                     'payment_status' => 2,
                 ]);
+
+                $orderItem = OrderItem::where('order_id', $order->id)->first();
+                
+                $product = Product::whereId($orderItem->product_id)->first();
+                $stok = $product->quantity - $orderItem->quantity;
+                $product->quantity = $stok;
+                $product->save();
             }
  
             if ($callback->isExpire()) {

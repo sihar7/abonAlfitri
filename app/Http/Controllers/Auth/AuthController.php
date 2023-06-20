@@ -14,17 +14,23 @@ use Illuminate\Support\Facades\Session;
 use App\Models\Role;
 use App\Models\Order;
 use App\Rules\MatchOldPassword;
+use App\Models\AboutUs;
 class AuthController extends Controller
 {
     function index()
     {
-        return view('auth.login');
+        
+        $data['about_us'] = AboutUs::limit(1)->orderBy('created_at', 'DESC')
+        ->where('status', 1)->get();
+        return view('auth.login', $data);
     }
 
     function register()
     {
+        $data['about_us'] = AboutUs::limit(1)->orderBy('created_at', 'DESC')
+        ->where('status', 1)->get();
 
-        return view('auth.register');
+        return view('auth.register', $data);
     }
 
     function postLogin(Request $request)
@@ -38,7 +44,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), ['email' => 'required|email']);
        
         if ($validator->fails() ) {
-            return response()->json(['message' => 6], 202);
+            return response()->json(['message' => 6, 'error' => $validator->errors()], 202);
             //validate gagal
         }
         
@@ -170,6 +176,8 @@ class AuthController extends Controller
     {
         $data['orders'] = Order::where('user_id', Auth::user()->id)->get();
 
+        $data['about_us'] = AboutUs::limit(1)->orderBy('created_at', 'DESC')
+        ->where('status', 1)->get();
         return view('landingPage.account.index', $data);
     }
 }

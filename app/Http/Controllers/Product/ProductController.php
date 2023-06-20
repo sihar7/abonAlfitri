@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Session;
+use App\Models\AboutUs;
 class ProductController extends Controller
 {
     
@@ -83,7 +84,13 @@ class ProductController extends Controller
 
     function getData($id)
     {
+        $input = "";
         $modal = Product::whereId(base64_decode($id))->first();
+        if ($modal->quantity > 0) {
+            $input .= '<li><i class="fal fa-check"></i>In Stock</li>';
+        } else {
+            $input .= '<li><i class="fal fa-window-close"></i>Sold Out</li>';
+        }
         
         $output="";
         $output .= '
@@ -97,7 +104,7 @@ class ProductController extends Controller
                                 <img src="'.asset('product/'. $modal->image).'"
                                     alt="Product Images" id="imageProduct">
                                 <div class="product-quick-view position-view">
-                                    <a href="'.asset('product/'. $modal->image).'"
+                                    <a href="'.url('product/getProduct/details', base64_encode($modal->id)).'"
                                         class="popup-zoom" id="aImageProduct">
                                         <i class="far fa-search-plus"></i>
                                     </a>
@@ -121,17 +128,13 @@ class ProductController extends Controller
                         <span
                             class="price-amount" id="priceProduct">'."Rp " . number_format($modal->priceDisc, 0, ",", ".") .' - '."Rp " . number_format($modal->price, 0, ",", ".") .'</span>
                         <ul class="product-meta">
-                            <li><i class="fal fa-check"></i>In stock</li>
-                            <li><i class="fal fa-check"></i>Free delivery available</li>
+                            '.$input.'
                         </ul>
-                        <p class="description" id="descriptionProduct">'.$modal->description.'</p>
+                        <p class="description" id="descriptionProduct">'.Str::limit(html_entity_decode($modal->description), 150).'</p>
 
-                        <!-- Start Product Action Wrapper  -->
                         <div class="product-action-wrapper d-flex-center">
-                            <!-- Start Quentity Action  -->
-                            <div class="pro-qty" data-title="Qty">
-                                <input type="number" min="1" value="1" class="quantity-input" name="quantity">
-                            </div>
+
+                            <div class="pro-qty mr--20"><input type="number" min="1" name="quantity" value="1"></div>
 
                             <input type="hidden" value="'.$modal->id.'" name="id">
                             <input type="hidden" value="'.$modal->name.'" name="name">
@@ -154,6 +157,21 @@ class ProductController extends Controller
         </div>';
         
         return response()->json($output);
+    }
+
+    function getProductDetail($id)
+    {
+        if(Auth::check())
+        {
+            $data = $this->cartProductGlobal();
+        } else {
+            $data = $this->cartProductGlobalNonUSer();
+        }
+
+        $data['about_us'] = AboutUs::limit(1)->orderBy('created_at', 'DESC')
+        ->where('status', 1)->get();
+        $data['productDetail'] = Product::whereId(base64_decode($id))->first();
+        return view('landingPage.product.show', $data);
     }
     
 }

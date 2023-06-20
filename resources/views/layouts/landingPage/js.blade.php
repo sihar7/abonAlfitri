@@ -249,7 +249,12 @@
                                     });
                                     window.location.href =
                                         `{{ url('/login') }}`;
-                                } else {
+                                    } else if(response.status == 3) {
+                                        Toast.fire({
+                                            icon: 'warning',
+                                            title: response.message
+                                        });
+                                    } else {
                                     $('.cart-count').html(response
                                         .total);
                                     $('.cartBody').html(response.body);
@@ -324,6 +329,11 @@
                             title: 'Silahkan Login Terlebih Dahulu'
                         });
                         window.location.href = `{{ url('/login') }}`;
+                    } else if(response.status == 3) {
+                        Toast.fire({
+                            icon: 'warning',
+                            title: response.message
+                        });
                     } else {
                         $('.cart-count').html(response.total);
                         $('.cartBody').html(response.body);
@@ -352,10 +362,9 @@
 
         $('#data-cart-add').on('submit', function (e) {
             e.preventDefault();
-            let data = $("#data-cart").serialize();
+            let data = $("#data-cart-add").serialize();
             let datax = new FormData(this);
 
-            console.log(datax);
             $.ajax({
                 type: "post",
                 url: `{{url('/cart/buyButton')}}`,
@@ -384,6 +393,11 @@
                             title: 'Silahkan Login Terlebih Dahulu'
                         });
                         window.location.href = `{{ url('/login') }}`;
+                    } else if(response.status == 3) {
+                        Toast.fire({
+                            icon: 'warning',
+                            title: response.message
+                        });
                     } else {
                         $('.cart-count').html(response.total);
                         $('.cartBody').html(response.body);
@@ -407,7 +421,62 @@
                 }
             });
         });
+           
+        $(this).on('click', '#button_create_troli_detail', function (e) {
+            e.preventDefault();
+            let id = $(this).data('id');
+            $.ajax({
+                type: "get",
+                url: `{{url('/cart/buy/view')}}/${id}`,
+                dataType: "json",
+                beforeSend: function()
+                {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Mohon Tunggu !',
+                        html: 'Pemesanan...',// add html attribute if you want or remove
+                        allowOutsideClick: false,
+                        onBeforeOpen: () => {
+                            Swal.showLoading()
+                        },
+                    });
+                },
+                success: function (response) {
+                    swal.close();
+                    if (response.status == 2) {
+                        Toast.fire({
+                            icon: 'warning',
+                            title: 'Silahkan Login Terlebih Dahulu'
+                        });
+                        window.location.href = `{{ url('/login') }}`;
+                    } else if(response.status == 3) {
+                        Toast.fire({
+                            icon: 'warning',
+                            title: response.message
+                        });
+                    } else {
+                        $('.cart-count').html(response.total);
+                        $('.cartBody').html(response.body);
+                        $('.cartBodyOriginal').html('');
+                        document.querySelector('.cart-dropdown').classList
+                            .toggle('open');
 
+                        $(".cart-close").on('click', function (e) {
+                            document.querySelector('.cart-dropdown')
+                                .classList.remove('open');
+                        });
+                    }
+                },
+                error: function (e) {
+                    swal.close();
+                    Toast.fire({
+                        icon: 'warning',
+                        title: 'Gagal'
+                    });
+
+                }
+            });
+        });
     });
 
 </script>

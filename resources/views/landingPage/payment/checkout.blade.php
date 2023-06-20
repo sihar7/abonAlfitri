@@ -208,7 +208,7 @@ Abon Alfitri | Checkout
                                         <td>{{ $item->name }} <span class="quantity">{{ $item->quantity }} x</span></td>
                                         <td>{{ "Rp. " . number_format(Cart::getTotal(), 0, ",", ".") }}</td>
                                     </tr>
-
+                                    <input type="hidden" id="id" name="id" value="{{ base64_encode($item->id) }}">
                                     @endforeach
                                     <tr class="order-total">
                                         <td>Total</td>

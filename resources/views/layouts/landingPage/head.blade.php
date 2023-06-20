@@ -4,9 +4,10 @@
     <title>@stack('title')</title>
     <meta name="robots" content="noindex, follow" />
     <meta name="description" content="">
-    
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, shrink-to-fit=no , maximum-scale=1.0, user-scalable=no">
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('logo/logoAlfitri.png')}}">
 
@@ -25,6 +26,19 @@
     <link rel="stylesheet" href="{{ asset('assets/css/vendor/magnific-popup.css')}}">
     <link rel="stylesheet" href="{{ asset('assets/css/vendor/base.css')}}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.min.css')}}">
-    
+
     @stack('customcss')
+    <style>
+        footer {
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #111;
+            height: auto;
+            width: 100vw;
+            padding-top: 40px;
+            color: #fff;
+        }
+
+    </style>
 </head>

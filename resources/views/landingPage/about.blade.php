@@ -25,7 +25,7 @@ Abon Alfitri | Beranda
             <div class="col-lg-6 col-md-4">
                 <div class="inner">
                     <div class="bradcrumb-thumb">
-                        <img src="assets/images/product/product-45.png" alt="Image">
+                       <img src="{{ asset('logo/logoAlfitri.png') }}" alt="Image" style="height:100px;">
                     </div>
                 </div>
             </div>
@@ -52,7 +52,7 @@ Abon Alfitri | Beranda
                     <h3 class="title">{{ $item->name }}</h3>
                     <div class="row">
                         <div class="col-xl-12">
-                            <p>{{ $item->description }}</p>
+                            <p>{!! html_entity_decode( $item->description) !!}</p>
                         </div>
                     </div>
                 </div>
@@ -63,50 +63,6 @@ Abon Alfitri | Beranda
 </div>
 <!-- End About Area  -->
 
-<!-- Start About Area  -->
-<div class="about-info-area">
-    <div class="container">
-        <div class="row row--20">
-            <div class="col-lg-4">
-                <div class="about-info-box">
-                    <div class="thumb">
-                        <img src="assets/images/about/shape-01.png" alt="Shape">
-                    </div>
-                    <div class="content">
-                        <h6 class="title">40,000+ Happy Customer</h6>
-                        <p>Empower your sales teams with industry
-                            tailored solutions that support.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="about-info-box">
-                    <div class="thumb">
-                        <img src="assets/images/about/shape-02.png" alt="Shape">
-                    </div>
-                    <div class="content">
-                        <h6 class="title">16 Years of Experiences</h6>
-                        <p>Empower your sales teams with industry
-                            tailored solutions that support.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="about-info-box">
-                    <div class="thumb">
-                        <img src="assets/images/about/shape-03.png" alt="Shape">
-                    </div>
-                    <div class="content">
-                        <h6 class="title">12 Awards Won</h6>
-                        <p>Empower your sales teams with industry
-                            tailored solutions that support.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- End About Area  -->
 <br>
 <br>
 <br>

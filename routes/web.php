@@ -24,7 +24,10 @@ use App\Http\Controllers\Payment\{
 
 use App\Http\Controllers\Admin\{
     DashboardController,
-    OrdersController
+    OrdersController,
+    ProductsController,
+    AboutUsController,
+    UsersController
 };
 
 /*
@@ -51,6 +54,7 @@ Route::get('/story', [HomeController::class, 'about'])->name('landingPage.about'
 Route::get('/virtualOutlet', [HomeController::class, 'virtualOutlet'])->name('landingPage.virtual');
 
 Route::get('/product/modal/{id}', [ProductController::class, 'getData']);
+Route::get('/product/getProduct/details/{id}', [ProductController::class, 'getProductDetail']);
 Route::get('search', [ProductController::class, 'search']);
 
 
@@ -58,7 +62,7 @@ Route::get('/getKabupaten/{id}', [CityController::class, 'getKabupaten']);
 Route::get('/getKecamatan/{id}', [CityController::class, 'getKecamatan']);
 Route::get('/getKelurahan/{id}', [CityController::class, 'getKelurahan']);
 
-Route::get('/admin', function () {
+Route::get('/admin/login', function () {
     return view('admin.auth.login');
 });
 
@@ -66,6 +70,7 @@ Route::prefix('cart')->group(function() {
     Route::get('/', [CartController::class, 'index']);
     Route::get('/index', [CartController::class, 'index']);
     Route::post('/buy/{id}', [CartController::class, 'buy']);
+    Route::get('/buy/view/{id}', [CartController::class, 'buyView']); 
     Route::post('/buyButton', [CartController::class, 'buyButton']);
     Route::get('/remove/{id}', [CartController::class, 'remove']);
     Route::get('/removeTroli/{id}', [CartController::class, 'removeTroli']);
@@ -73,14 +78,32 @@ Route::prefix('cart')->group(function() {
     Route::get('/clearAll', [CartController::class, 'clearAll']);
 });
 
-Route::group(['middleware' => ['web', 'auth', 'has_login']], function () {
+Route::group(['middleware' => ['admin']], function () {
+    Route::prefix('admin')->group(function() {
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+        Route::get('/orders', [OrdersController::class, 'index']);
+        Route::get('orders/show/{id}', [OrdersController::class, 'show']);
+        Route::get('orders/updateStatus/{id}', [OrdersController::class, 'updateStatus']);
 
-    Route::group(['middleware' => ['admin']], function () {
-        Route::prefix('admin')->group(function() {
-            Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
-            Route::get('/orders', [OrdersController::class, 'index']);
-        });
+        Route::get('product-list', [ProductsController::class, 'index']);
+        Route::get('product-list/edit/{id}', [ProductsController::class, 'edit']);
+        Route::post('product-list/store', [ProductsController::class, 'store']);
+        Route::get('product-list/delete/{id}', [ProductsController::class, 'destroy']);
+
+        Route::get('aboutus-list', [AboutUsController::class, 'index']);
+        Route::get('aboutus-list/edit/{id}', [AboutUsController::class, 'edit']);
+        Route::post('aboutus-list/store', [AboutUsController::class, 'store']);
+        Route::get('aboutus-list/delete/{id}', [AboutUsController::class, 'destroy']);
+
+        
+        Route::get('users-list', [UsersController::class, 'index']);
+        Route::get('users-list/edit/{id}', [UsersController::class, 'edit']);
+        Route::post('users-list/store', [UsersController::class, 'store']);
+        Route::get('users-list/delete/{id}', [UsersController::class, 'destroy']);
     });
+});
+
+Route::group(['middleware' => ['web', 'auth', 'has_login']], function () {
 
     Route::resource('orders', OrderController::class)->only(['index', 'show']);
     Route::post('payments/midtrans-notification', [PaymentCallbackController::class, 'receive']);

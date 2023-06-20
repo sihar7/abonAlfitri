@@ -47,4 +47,27 @@ class Controller extends BaseController
 
         return $data;
     }
+
+    private function sensor( $data = '' )
+    {
+        if ($data == '') {
+            return "-";
+        } else {
+            $sensor = substr($data,0,3);
+            $censored = 'X';
+            for ($i=0; $i < strlen($data)-4; $i++) {
+                $censored .= "X";
+            }
+            return $sensor.$censored;
+        }
+    }
+
+    function aboutUsGlobal()
+    {
+        $data = [
+            'cart' => AboutUs::limit(1)->where('status', 1)->orderBy('id', 'DESC')->get(),
+        ];
+
+        return $data;
+    }
 }
