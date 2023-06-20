@@ -12,14 +12,17 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Product;
 use App\Models\AboutUs;
+use App\Models\ProvinceSecond;
 class CheckoutController extends Controller
 {
     function checkout()
     {
         $data = $this->cartProductGlobal();
-        $data['province'] = DB::table('provinces')->orderBy('name', 'ASC')->get();
+        $data['provinces'] = ProvinceSecond::pluck('name', 'province_id');
         $data['about_us'] = AboutUs::limit(1)->orderBy('created_at', 'DESC')
         ->where('status', 1)->get();
+
+        
         return view('landingPage.payment.checkout', $data);
     }
 
@@ -43,11 +46,10 @@ class CheckoutController extends Controller
                 $address2       = $request->address2;
                 $province_id    = $request->province_id;
                 $regency_id     = $request->regency_id;
-                $district_id    = $request->district_id;
-                $villages_id    = $request->villages_id;
                 $post_code      = $request->post_code;
                 $phone_number   = $request->phone_number;
                 $email          = $request->email;
+                $weight         = $request->weight;
                 
             } else if($request->alamat2 == "yes")
             {
@@ -55,18 +57,17 @@ class CheckoutController extends Controller
                 $address2       = $request->address22;
                 $province_id    = $request->province_id2;
                 $regency_id     = $request->regency_id2;
-                $district_id    = $request->district_id2;
-                $villages_id    = $request->villages_id2;
                 $post_code      = $request->post_code2;
                 $phone_number   = $request->phone_number2;
                 $email          = $request->email2;
+                $weight         = $request->weight2;
             }
             
             $order = Order::create([
                 'order_number'      =>  'ORD-'.strtoupper(uniqid()),
                 'user_id'           => auth()->user()->id,
                 'status'            =>  'pending',
-                'grand_total'       =>  Cart::session(Auth::user()->id)->getSubTotal(),
+                'grand_total'       =>  str_replace("Rp.", "", $request->totalpayment),
                 'item_count'        =>  Cart::session(Auth::user()->id)->getTotalQuantity(),
                 'payment_status'    =>  $payment_status,
                 'payment_method'    =>  $request->payment,
@@ -78,12 +79,12 @@ class CheckoutController extends Controller
                 'address2'          =>  $address2,
                 'province_id'       =>  $province_id,
                 'regency_id'        =>  $regency_id,
-                'district_id'       =>  $district_id,
-                'villages_id'       =>  $villages_id,
                 'post_code'         =>  $post_code,
                 'phone_number'      =>  $phone_number,
                 'notes'             =>  $request->notes,
-                
+                'expedisi'          =>  $request->expedisi,
+                'weight'            =>  $weight,
+                'ongkir'            =>  $request->ongkir
             ]);
     
             if ($order) {
@@ -104,10 +105,8 @@ class CheckoutController extends Controller
                     
                     $order->items()->save($orderItem);
                 }
-                
-                \Cart::session(Auth::user()->id)->remove(base64_decode($request->id));   
                  
-                return response()->json(['status' => 1], 201);
+                return response()->json(['status' => 1, 'orderId' => $order->id], 201);
             } else {
                 return response()->json(['status' => 2], 201);
             }

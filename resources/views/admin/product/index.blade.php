@@ -52,7 +52,6 @@ PRODUK
                                                         <th>Harga </th>
                                                         <th>Harga Diskon</th>
                                                         <th>Jumlah </th>
-                                                        <th>Deskripsi </th>
                                                         <th>Banner</th>
                                                         <th>Aksi</th>
                                                     </tr>
@@ -448,10 +447,6 @@ PRODUK
                 {
                     data: 'quantity',
                     name: 'quantity'
-                },
-                {
-                    data: 'description',
-                    name: 'description'
                 },
                 {
                     data: 'slideActive',

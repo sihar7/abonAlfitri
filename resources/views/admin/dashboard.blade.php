@@ -35,7 +35,9 @@ Admin Abon Alfitri | Beranda
             <div class="card-body d-flex justify-content-between">
                 <div class="card-menu">
                     <span>Total Pendapatan</span>
-                    <h2 class="mb-0">{{ "Rp " . number_format($revenue->sum(), 0, ",", ".") }}</h2>
+                    @foreach ($revenue as $item)
+                    <h2 class="mb-0">{{ "Rp " . number_format($item->count, 0, ",", ".") }}</h2>
+                    @endforeach
                 </div>
                 <div class="icon-box icon-box-lg bg-primary-light">
                     <svg width="26" height="30" viewBox="0 0 26 30" fill="none" xmlns="http://www.w3.org/2000/svg">

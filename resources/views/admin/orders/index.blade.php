@@ -14,43 +14,51 @@ ORDER
 @endpush
 
 @section('content')
-<div class="col-lg-12">
-
-    <div class="card dz-card" id="accordion-one">
-        <div class="card-header flex-wrap">
-            <div>
-                <h4 class="card-title">Table Order</h4>
+<div class="row">
+    <!-- Column  -->
+    <div class="col-lg-12">
+        <div class="card dz-card">
+            <div class="card-header flex-wrap border-0" id="default-tab">
+                <h4 class="card-title">Order</h4>
             </div>
-        </div>
-        <!--tab-content-->
-        <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="Preview" role="tabpanel" aria-labelledby="home-tab">
-                <div class="card-body pt-0">
-                </div>
-
-                <div class="table-responsive">
-                    <table id="example4" class="display table" style="min-width: 845px">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Order Number</th>
-                                <th>Pelanggan</th>
-                                <th>Metode Pembayaran </th>
-                                <th>Total Harga</th>
-                                <th>Jumlah </th>
-                                <th>Status </th>
-                                <th>Tanggal</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="DefaultTab" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="card-body pt-0">
+                        <!-- Nav tabs -->
+                        <div class="default-tab">
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="Preview" role="tabpanel" aria-labelledby="home-tab">
+                                    <div class="card-body pt-0">
+                                    </div>
+                    
+                                    <div class="table-responsive">
+                                        <table id="example4" class="display table" style="min-width: 845px">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Order Number</th>
+                                                    <th>Pelanggan</th>
+                                                    <th>Total Harga</th>
+                                                    <th>Jumlah </th>
+                                                    <th>Status </th>
+                                                    <th>Tanggal</th>
+                                                    <th>Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 @endsection
 
@@ -123,10 +131,6 @@ ORDER
                 {
                     data: 'name',
                     name: 'name'
-                },
-                {
-                    data: 'payment_method',
-                    name: 'payment_method'
                 },
                 {
                     data: 'grand_total',
@@ -209,6 +213,188 @@ ORDER
                 }
             })
         });
+
+        $(this).on('click', '#buttonAccept', function (e) {
+            e.preventDefault();
+            let id = $(this).data('id');
+            Swal.fire({
+                title: 'Peringatan',
+                text: "Apakah anda yakin akan mengkonfirmasi pembayaran ?",
+                icon: 'warning',
+                showCancelButton: true,
+                buttonsStyling: true,
+                confirmButtonClass: 'btn btn-danger',
+                cancelButtonClass: 'btn btn-primary',
+                confirmButtonText: 'Konfirmasi <i class="fa-solid fa-check me-2"></i>',
+                cancelButtonText: 'Batal <i class="fa-solid fa-close me-2"> </i>'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        type: "GET",
+                        url: `{{url('admin/orders/updateAccept')}}/${id}`,
+                        data: {
+                            _token: '{{csrf_token()}}'
+                        },
+                        dataType: "json",
+                        beforeSend: function()
+                        {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Mohon Tunggu !',
+                                html: 'Mengkonfirmasi...',// add html attribute if you want or remove
+                                allowOutsideClick: false,
+                                onBeforeOpen: () => {
+                                    Swal.showLoading()
+                                },
+                            });
+                        },
+                        success: function (response) {
+                            swal.close();
+                            let oTable = $('#example4').dataTable();
+                            oTable.fnDraw(false);
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                text: 'Pesanan Berhasil Dikonfirmasi !',
+                            });
+                        },
+                        error: function () {
+                            
+                            swal.close();
+                            Toast.fire({
+                                icon: 'error',
+                                text: 'Gagal mengkonfirmasi data !'
+                            })
+                        }
+                    });
+                }
+            })
+        });
+
+        $(this).on('click', '#buttonCancel', function (e) {
+            e.preventDefault();
+            let id = $(this).data('id');
+            Swal.fire({
+                title: 'Peringatan',
+                text: "Apakah anda yakin membatalkan orderan ini ?",
+                icon: 'warning',
+                showCancelButton: true,
+                buttonsStyling: true,
+                confirmButtonClass: 'btn btn-danger',
+                cancelButtonClass: 'btn btn-primary',
+                confirmButtonText: 'Batalkan <i class="fa-solid fa-check me-2"></i>',
+                cancelButtonText: 'Batal <i class="fa-solid fa-close me-2"> </i>'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        type: "GET",
+                        url: `{{url('admin/orders/updateCancel')}}/${id}`,
+                        data: {
+                            _token: '{{csrf_token()}}'
+                        },
+                        dataType: "json",
+                        beforeSend: function()
+                        {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Mohon Tunggu !',
+                                html: 'Membatalkan...',// add html attribute if you want or remove
+                                allowOutsideClick: false,
+                                onBeforeOpen: () => {
+                                    Swal.showLoading()
+                                },
+                            });
+                        },
+                        success: function (response) {
+                            swal.close();
+                            let oTable = $('#example4').dataTable();
+                            oTable.fnDraw(false);
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                text: 'Pesanan Berhasil Dibatalkan !',
+                            });
+                        },
+                        error: function () {
+                            
+                            swal.close();
+                            Toast.fire({
+                                icon: 'error',
+                                text: 'Gagal Membatalkan data !'
+                            })
+                        }
+                    });
+                }
+            })
+        });
+        $(this).on('click', '#buton_generate', function (e) {
+            e.preventDefault();
+            let id = $(this).data('id');
+            let order = $(this).data('order');
+            
+            var data = '';
+            Swal.fire({
+                title: 'Notifikasi',
+                text: "Apakah anda yakin akan men-generate invoice ini ?",
+                icon: 'question',
+                showCancelButton: true,
+                buttonsStyling: true,
+                confirmButtonClass: 'btn btn-danger btn-lg mr-2',
+                cancelButtonClass: 'btn btn-primary btn-lg',
+                confirmButtonText: 'Generate <i class="fas fa-download"></i>',
+                cancelButtonText: 'Batal <i class="fas fa-close"> </i>'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        type: "GET",
+                        url: `{{url('admin/invoice/generate')}}/${id}`,
+                        data: data,
+                        xhrFields: {
+                            responseType: 'blob'
+                        },
+                        beforeSend: function()
+                        {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Mohon Tunggu !',
+                                html: 'Proses Generate...',// add html attribute if you want or remove
+                                allowOutsideClick: false,
+                                onBeforeOpen: () => {
+                                    Swal.showLoading()
+                                },
+                            });
+                        },
+                        success: function(response){
+                      
+                            swal.close();
+                            var blob = new Blob([response]);
+
+                            var link = document.createElement('a');
+
+                            link.href = window.URL.createObjectURL(blob);
+
+                            link.download = `invoice-${order}.pdf`;
+
+                            link.click();
+
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                text: 'Data Berhasil Digenerate !',
+                            });
+                        },
+
+                            error: function(blob){
+
+                            swal.close();
+                            console.log(blob);
+
+                        }
+                    });
+                }
+            })
+        });
+
     });
 
 </script>

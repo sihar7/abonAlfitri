@@ -12,19 +12,19 @@ Abon Alfitri | Beranda
     <div class="container">
         <div class="row">
             <div class="col-12 col-md-8">
-                <div class="card shadow">
+                <div class="card shadow-lg p-3 mb-5 bg-body rounded">
                     <div class="card-header">
                         <h5>Data Order</h5>
                     </div>
                     <div class="table-responsive">
-                        <table class="table axil-product-table axil-cart-table mb--40" id="tableOrders">
+                        <table class="table axil-product-table" id="tableOrders">
                             <tr>
                                 <td>ID</td>
-                                <td><b>#{{ $order->number }}</b></td>
+                                <td><b>#{{ $order->order_number }}</b></td>
                             </tr>
                             <tr>
                                 <td>Total Harga</td>
-                                <td><b>{{ "Rp " . number_format($order->grand_total, 2, ',', '.') }}</b></td>
+                                <td><b>{{ "Rp. " . number_format($order->grand_total, 2, ',', '.') }}</b></td>
                             </tr>
                             <tr>
                                 <td>Status Pembayaran</td>
@@ -47,13 +47,13 @@ Abon Alfitri | Beranda
                 </div>
             </div>
             <div class="col-12 col-md-4">
-                <div class="card shadow">
+                <div class="card shadow-lg p-3 mb-5 bg-body rounded">
                     <div class="card-header">
                         <h5>Pembayaran</h5>
                     </div>
                     <div class="card-body">
                         @if ($order->payment_status == 1)
-                            <button class="btn btn-primary" id="pay-button">Bayar Sekarang</button>
+                            <button class="btn btn-primary" id="pay-button"><h5 style="color: white; text-align:center;">Bayar Sekarang</></button>
                         @elseif($oder->payment_status == 5)
                             Pembayaran Ditempat
                         @else

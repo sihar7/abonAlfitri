@@ -42,7 +42,7 @@ class CreateSnapTokenService extends Midtrans
             ];
         }
             
- 
+
         $snapToken = Snap::getSnapToken($params);
  
         return $snapToken;

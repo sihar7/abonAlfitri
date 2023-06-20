@@ -48,10 +48,10 @@ Abon Alfitri | Cart
                                     </div>
                                 </td>
                                 <td class="product-price" data-title="Price">
-                                    {{ "Rp " . number_format($item->price * $item->quantity, 0, ",", ".") }}</td>
+                                    {{ "Rp " . number_format($item->price * $item->quantity, 0, ",", ".") }}
+                                
+                                   <input type="hidden" name="id" value="{{ base64_encode($item->id) }}"></td>
                             </tr>
-                            
-                            <input type="hidden" name="id" value="{{ base64_encode($item->id) }}">
                             @endforeach
                         </tbody>
                         
@@ -160,7 +160,6 @@ Abon Alfitri | Cart
                 success: function (response) {
                     
                     swal.close();
-                    $("#jenis_menuHelp").html("");
                     $('#updateCart').val("Update Cart");
                     $('#updateCart').removeAttr('disabled');
                     if (response.status == 1) {

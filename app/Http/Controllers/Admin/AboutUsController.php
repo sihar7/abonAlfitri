@@ -28,11 +28,7 @@ class AboutUsController extends Controller
                 ->addColumn('image', function($data){
                     return '<img src="'.asset('about/', $data->image).'" alt="Site Logo" style="height: 95px;">';
                 })
-
-                ->addColumn('description', function($data){
-                    return ''.html_entity_decode($data->description).'';
-                })
-                ->rawColumns(['action', 'image', 'description'])
+                ->rawColumns(['action', 'image'])
                 ->addIndexColumn()
                 ->make(true);
         }

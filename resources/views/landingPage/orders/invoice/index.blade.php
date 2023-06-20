@@ -399,6 +399,15 @@
                 <th><span contenteditable>Tanggal</span></th>
                 <td><span contenteditable>{{ $orderGet->created_at->format('d M Y H:i') }}</span></td>
             </tr>
+            <tr>
+                <th><span contenteditable>Jasa Pengiriman</span></th>
+                <td><span contenteditable>{{ $orderGet->expedisi }}</span></td>
+            </tr>
+            <tr>
+                <th><span contenteditable>Total Berat</span></th>
+                <td><span contenteditable>{{ $orderGet->weight }} Gram</span></td>
+            </tr>
+            
         </table>
         <table class="inventory">
             <thead>

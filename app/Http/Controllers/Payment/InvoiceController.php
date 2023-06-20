@@ -62,4 +62,48 @@ class InvoiceController extends Controller
         return response()->download($pdf);
 
     }
+    function generateAdmin($idOrder)
+    {
+        $order = OrderItem::join('orders', 'order_items.order_id', '=', 'orders.id')
+        ->join('products', 'order_items.product_id', '=', 'products.id')
+        ->select(
+            'orders.*',
+            'order_items.price',
+            'products.name as name_product',
+            'order_items.quantity as quantity_item',
+            'products.description as descriptionn',
+            'products.priceDisc as price_products'
+        )
+        ->where('orders.id', $idOrder)
+        ->get();
+
+        $namaOrder = OrderItem::join('orders', 'order_items.order_id', '=', 'orders.id')
+        ->join('products', 'order_items.product_id', '=', 'products.id')
+        ->select(
+            'orders.*',
+            'order_items.price',
+            'products.name as name_product'
+        )
+        ->where('orders.id', $idOrder)
+        ->first();
+
+        
+        $customPaper = array(0,0,650,1400);
+        $pdf = PDF::loadView('landingPage.orders.invoice.index',['order' => $order, 'orderGet' => $namaOrder])->setPaper($customPaper,'portrait');
+        
+        $path = public_path('pdf/invoice');
+
+        $filename = $namaOrder->order_number . '-' . $namaOrder->first_name .' '. $namaOrder->last_name . '.' . 'pdf';
+        $pdf->save($path . '/' . $filename);
+
+        $createPdf = new Invoice;
+        $createPdf->fileName = $filename;
+        $createPdf->user_id = $namaOrder->user_id;
+        $createPdf->path = $path;
+        $createPdf->save();
+
+        $pdf = public_path('pdf/invoice/'.$filename);
+        return response()->download($pdf);
+
+    }
 }

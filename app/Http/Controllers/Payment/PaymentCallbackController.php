@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Payment;
 
+use Cart;
 use App\Models\Product;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
@@ -28,18 +29,24 @@ class PaymentCallbackController extends Controller
                 $stok = $product->quantity - $orderItem->quantity;
                 $product->quantity = $stok;
                 $product->save();
+
+                \Cart::session(Auth::user()->id)->clear(); 
             }
  
             if ($callback->isExpire()) {
                 Order::where('id', $order->id)->update([
                     'payment_status' => 3,
                 ]);
+                
+                \Cart::session(Auth::user()->id)->clear(); 
             }
  
             if ($callback->isCancelled()) {
                 Order::where('id', $order->id)->update([
                     'payment_status' => 4,
                 ]);
+                
+                \Cart::session(Auth::user()->id)->clear(); 
             }
  
             return response()

@@ -24,7 +24,7 @@ class DashboardController extends Controller
 
             $data = [
                 'visitor'   => DB::table('visitors')->count(),
-                'revenue'   => DB::table('orders')->where('payment_status', 2)->get(),
+                'revenue'   => DB::table('orders')->select(DB::raw("SUM(grand_total) as count"))->where('payment_status', 2)->orderBy("created_at")->groupBy(DB::raw("year(created_at)"))->get(),
                 'orders'    => DB::table('orders')->count(),
                 'customer'  => DB::table('role_users')->join('users', 'role_users.user_id', '=', 'users.id')
                                 ->join('roles', 'role_users.role_id', '=', 'roles.id')

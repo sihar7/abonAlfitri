@@ -19,7 +19,8 @@ use App\Http\Controllers\Product\{
 use App\Http\Controllers\Payment\{
     PaymentCallbackController,
     CheckoutController,
-    InvoiceController
+    InvoiceController,
+    CheckOngkirController
 };
 
 use App\Http\Controllers\Admin\{
@@ -59,8 +60,8 @@ Route::get('search', [ProductController::class, 'search']);
 
 
 Route::get('/getKabupaten/{id}', [CityController::class, 'getKabupaten']);
-Route::get('/getKecamatan/{id}', [CityController::class, 'getKecamatan']);
-Route::get('/getKelurahan/{id}', [CityController::class, 'getKelurahan']);
+Route::post('/ongkir', [CheckOngkirController::class, 'get_ongkir']);
+Route::post('/getTotalOngkir', [CheckOngkirController::class, 'getTotalOngkir']);
 
 Route::get('/admin/login', function () {
     return view('admin.auth.login');
@@ -84,7 +85,9 @@ Route::group(['middleware' => ['admin']], function () {
         Route::get('/orders', [OrdersController::class, 'index']);
         Route::get('orders/show/{id}', [OrdersController::class, 'show']);
         Route::get('orders/updateStatus/{id}', [OrdersController::class, 'updateStatus']);
-
+        Route::get('orders/updateCancel/{id}', [OrdersController::class, 'updateCancel']);
+        Route::get('orders/updateAccept/{id}', [OrdersController::class, 'updateAccept']);
+        
         Route::get('product-list', [ProductsController::class, 'index']);
         Route::get('product-list/edit/{id}', [ProductsController::class, 'edit']);
         Route::post('product-list/store', [ProductsController::class, 'store']);
@@ -95,6 +98,7 @@ Route::group(['middleware' => ['admin']], function () {
         Route::post('aboutus-list/store', [AboutUsController::class, 'store']);
         Route::get('aboutus-list/delete/{id}', [AboutUsController::class, 'destroy']);
 
+        Route::get('/invoice/generate/{idOrder}', [InvoiceController::class, 'generateAdmin']);
         
         Route::get('users-list', [UsersController::class, 'index']);
         Route::get('users-list/edit/{id}', [UsersController::class, 'edit']);

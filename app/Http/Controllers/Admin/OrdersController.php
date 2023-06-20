@@ -18,7 +18,7 @@ class OrdersController extends Controller
             ->get();
             return DataTables()->of($data)
                 ->addColumn('action', function($data){
-                    return '<a href="'.url('admin/orders/show', base64_encode($data->id)).'" class="btn btn-dark" id="button_detail"><i class="fa-solid fa-eye me-2"></i> Detail</a>'.'&nbsp;'.'<a href="#" class="btn btn-danger" data-id="'.$data->id.'" id="buttonUpdate"><i class="fa-solid fa-calendar me-2"></i> Expired</a>';
+                    return '<a href="'.url('admin/orders/show', base64_encode($data->id)).'" class="btn btn-dark" id="button_detail"><i class="fa-solid fa-eye me-2"></i> Detail</a>'.'&nbsp;'.'<a href="#" class="btn btn-info" data-id="'.$data->id.'" id="buttonUpdate"><i class="fa-solid fa-calendar me-2"></i> Expired</a>'.'&nbsp;'.'<a href="#" class="btn btn-danger" data-id="'.$data->id.'" id="buttonCancel"><i class="fa-solid fa-close me-2"></i> Batalkan</a>';
                 })
 
                 ->addColumn('grand_total', function($data){
@@ -26,11 +26,13 @@ class OrdersController extends Controller
                 })
                  ->addColumn('payment_status', function($data){
                     if ($data->payment_status == 1) {
-                        return '<span class="badge badge-info">Menunggu Pembayaran</span>';
+                        return '<span class="badge badge-info">Menunggu Pembayaran</span>'. '&nbsp'.'<a href="#" class="btn btn-success" data-id="'.$data->id.'" id="buttonAccept"><i class="fa-solid fa-check me-2"></i> Konfirmasi Pembayaran</a>';;
                     } elseif($data->payment_status == 2) {
-                        return '<span class="badge badge-success">Sudah Dibayar</span>';
+                        return '<span class="badge badge-success">Sudah Dibayar</span>'. '&nbsp'. ' <a href="#" data-id="'.$data->id.'" class="btn btn-primary" data-order="'.$data->order_number.'" id="buton_generate"><i class="fas fa-download"></i> Invoice</a>'.'&nbsp;'.'<a href="#" class="btn btn-success" data-id="'.$data->id.'" id="buttonAccept"><i class="fa-solid fa-check me-2"></i> Konfirmasi Pembayaran</a>';
                     } elseif($data->payment_status == 5) {
-                        return '<span class="badge badge-info">Bayar Cod</span>';
+                        return '<span class="badge badge-info">Bayar Cod</span>'. '&nbsp'. ' <a href="#" data-id="'.$data->id.'" class="btn btn-primary" data-order="'.$data->order_number.'" id="buton_generate"><i class="fas fa-download"></i> Invoice</a>'. '&nbsp'. '<a href="#" class="btn btn-success" data-id="'.$data->id.'" id="buttonAccept"><i class="fa-solid fa-check me-2"></i> Konfirmasi Pembayaran</a>';
+                    } elseif($data->payment_status == 4) {
+                        return '<span class="badge badge-danger">Dibatalkan</span>';
                     } else {
                         return '<span class="badge badge-danger">Kadaluarsa</span>';
                     }
@@ -54,10 +56,8 @@ class OrdersController extends Controller
         $data['order'] = OrderItem::join('orders', 'order_items.order_id', '=', 'orders.id')
         ->join('products', 'order_items.product_id', '=', 'products.id')
         ->join('users', 'orders.user_id', '=', 'users.id')
-        ->join('provinces', 'orders.province_id', '=', 'provinces.id')
-        ->join('regencies', 'orders.regency_id', '=', 'regencies.id')
-        ->join('districts', 'orders.district_id', '=', 'districts.id')
-        ->join('villages', 'orders.villages_id', '=', 'villages.id')
+        ->join('province_seconds', 'orders.province_id', '=', 'province_seconds.province_id')
+        ->join('city_seconds', 'orders.regency_id', '=', 'city_seconds.city_id')
         ->select(
             'orders.*',
             'order_items.price',
@@ -68,13 +68,13 @@ class OrdersController extends Controller
             'users.id as id_user',
             'users.email as email_user',
             'users.name as name_user',
-            'provinces.name as name_province',
-            'regencies.name as name_regencies',
-            'districts.name as name_districts',
-            'villages.name as name_villages'
+            'province_seconds.name as name_province',
+            'city_seconds.name as name_regencies'
         )
         ->where('orders.id', base64_decode($id))
         ->get();
+
+        $data['orderGet'] = Order::whereId(base64_decode($id))->first();
 
         // return response()->json($data);
         return view('admin.orders.show', $data);
@@ -87,6 +87,24 @@ class OrdersController extends Controller
         $order->save();
 
         
+        return response()->json($order);
+    }
+
+    function updateCancel($id)
+    {
+        $order = Order::where('id', $id)->first();
+        $order->payment_status = 4;
+        $order->save();
+
+        
+        return response()->json($order);
+    }
+
+    function updateAccept($id)
+    {
+        $order = Order::where('id', $id)->first();
+        $order->payment_status = 2;
+        $order->save();
         return response()->json($order);
     }
 }

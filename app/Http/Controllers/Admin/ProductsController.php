@@ -26,10 +26,6 @@ class ProductsController extends Controller
                     '<a href="#" class="btn btn-danger" data-id="'.$data->id.'" id="buton_hapus"><i class="fa-solid fa-trash me-2"></i> Hapus</a>';
                 })
 
-                ->addColumn('description', function($data){
-                    return ''.html_entity_decode($data->description).'';
-                })
-
                 ->addColumn('price', function($data){
                     return 'Rp. '.number_format($data->price, 0, ',', '.').'';
                 })
@@ -46,7 +42,7 @@ class ProductsController extends Controller
                 ->addColumn('image', function($data){
                     return '<img src="'.asset('product').'/'.$data->image.'" alt="Site Logo" style="height: 95px;">';
                 })
-                ->rawColumns(['action', 'price', 'priceDisc','slideActive', 'description', 'image'])
+                ->rawColumns(['action', 'price', 'priceDisc','slideActive', 'image'])
                 ->addIndexColumn()
                 ->make(true);
         }

@@ -15,7 +15,7 @@ Abon Alfitri | Checkout
             <div class="row">
                 <div class="col-lg-6">
                     @php
-                    $splitName = explode(' ', Auth::user()->name, 2); 
+                    $splitName = explode(' ', Auth::user()->name, 2);
 
                     $first_name = $splitName[0];
                     $last_name = !empty($splitName[1]) ? $splitName[1] : '';
@@ -48,40 +48,53 @@ Abon Alfitri | Checkout
                                 onkeypress='return harusHuruf(event)'>
                         </div>
                         <div class="a1">
-                            <div class="form-group">
-                                <label>Provinsi</label>
-                                <select name="province_id" id="province" oninput="setCustomValidity('')"
-                                    oninvalid="this.setCustomValidity('Mohon Masukan Provinsi')" required>
-
-                                    <option value="-" selected disabled>Pilih Salah Satu</option>
-                                    @foreach ($province as $item)
-                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                            
                             <div class="row">
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Provinsi</label>
+                                        <select name="province_id" id="province" oninput="setCustomValidity('')"
+                                            oninvalid="this.setCustomValidity('Mohon Masukan Provinsi')">
+        
+                                            <option value="-" selected disabled>Pilih Salah Satu</option>
+                                            @foreach ($provinces as $province => $value)
+                                                <option value="{{ $province  }}">{{ $value }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
                                     <div class="form-group">
                                         <label class="form-label">Kota / Kabupaten</label>
                                         <select name="regency_id" id="regency">
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="form-label">Kecamatan</label>
-                                        <select name="district_id" id="district">
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="form-label">Kelurahan</label>
-                                        <select name="villages_id" id="villages">
-                                        </select>
-                                    </div>
-                                </div>
+                                
+                            </div>
 
+                            <div class="form-group">
+                                <label class="font-weight-bold">Berat (GRAM)</label>
+                                <input type="text" class="form-control" onkeypress="return hanyaAngka(event)"
+                                maxlength="6" name="weight" id="weight"
+                                    placeholder="Masukkan Berat (GRAM)">
+                            </div>
+                            <div class="form-group">
+                                <label>Pilih Expedisi</label>
+                                <select name="kurir" id="kurir" oninput="setCustomValidity('')"
+                                    oninvalid="this.setCustomValidity('Mohon Masukan kurir')" >
+                                    <option value="">Pilih kurir</option>
+                                    <option value="jne">JNE</option>
+                                    <option value="tiki">TIKI</option>
+                                    <option value="pos">POS INDONESIA</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Pilih Layanan</label>
+                                <select name="layanan" id="layanan" oninput="setCustomValidity('')"
+                                    oninvalid="this.setCustomValidity('Mohon Masukan Layanan')" >
+                                    <option value="">Pilih layanan</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label>Alamat <span>*</span></label>
@@ -118,41 +131,49 @@ Abon Alfitri | Checkout
                                 </a>
                             </div>
                             <div class="toggle-open">
-                                <div class="form-group">
-                                    <label>Provinsi</label>
-                                    <select name="province_id2" id="province2" oninput="setCustomValidity('')"
-                                        oninvalid="this.setCustomValidity('Mohon Masukan Provinsi')" required>
-
-                                        <option value="-" selected disabled>Pilih Salah Satu</option>
-                                        @foreach ($province as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
                                 <div class="row">
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Provinsi</label>
+                                            <select name="province_id2" id="province2">
+        
+                                                <option value="-" selected disabled>Pilih Salah Satu</option>
+                                                @foreach ($provinces as $province => $value)
+                                                    <option value="{{ $province  }}">{{ $value }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
                                         <div class="form-group">
                                             <label class="form-label">Kota / Kabupaten</label>
                                             <select name="regency_id2" id="regency2">
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label class="form-label">Kecamatan</label>
-                                            <select name="district_id2" id="district2">
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label class="form-label">Kelurahan</label>
-                                            <select name="villages_id2" id="villages2">
-                                            </select>
-                                        </div>
-                                    </div>
+                                    
 
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="font-weight-bold">BERAT (GRAM)</label>
+                                    <input type="number" class="form-control" name="weight2" id="weight2"
+                                        placeholder="Masukkan Berat (GRAM)">
+                                </div>
+                                <div class="form-group">
+                                    <label>Pilih Expedisi</label>
+                                    <select name="kurir2" id="kurir2">
+                                        <option value="">Pilih kurir</option>
+                                        <option value="jne">JNE</option>
+                                        <option value="tiki">TIKI</option>
+                                        <option value="pos">POS INDONESIA</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Pilih Layanan</label>
+                                    <select name="layanan2" id="layanan2" >
+                                        <option value="">Pilih layanan</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Alamat <span>*</span></label>
@@ -206,14 +227,20 @@ Abon Alfitri | Checkout
                                     @foreach ($cart as $item)
                                     <tr class="order-product">
                                         <td>{{ $item->name }} <span class="quantity">{{ $item->quantity }} x</span></td>
-                                        <td>{{ "Rp. " . number_format(Cart::getTotal(), 0, ",", ".") }}</td>
+                                        <td>{{ "Rp. " . number_format($item->price * $item->quantity, 0, ",", ".") }}
+                                        </td>
                                     </tr>
                                     <input type="hidden" id="id" name="id" value="{{ base64_encode($item->id) }}">
                                     @endforeach
                                     <tr class="order-total">
+                                        <td>Total Ongkos Kirim</td>
+                                        <td class="order-total-amount ongkir">
+                                        </td>
+                                    </tr>
+                                    <tr class="order-total">
                                         <td>Total</td>
-                                        <td class="order-total-amount">
-                                            {{ "Rp. " . number_format(Cart::getTotal(), 0, ",", ".") }}</td>
+                                        <td class="order-total-amount totalKirim">
+                                            {{ "Rp. " . number_format(Cart::session(Auth::user()->id)->getTotal(), 0, ",", ".") }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -237,6 +264,11 @@ Abon Alfitri | Checkout
                             </div>
                         </div>
                         <input type="hidden" name="alamat2" value="" id="alamat2">
+                        <input type="hidden" name="expedisi" value="" id="expedisi">
+                        <input type="hidden" name="totalpayment" value="" id="totalpayment">
+                        <input type="hidden" name="ongkir" value="" id="ongkirValue">
+                        
+                        
                         <button type="submit" class="axil-btn btn-bg-primary checkout-btn"
                             id="checkoutBTN">Checkout</button>
                     </div>
@@ -296,30 +328,6 @@ Abon Alfitri | Checkout
             });
         });
 
-        $(document).on('change', '#regency', function () {
-            let id = $(this).val();
-            $.ajax({
-                type: "get",
-                url: `{{url('/getKecamatan')}}/${id}`,
-                dataType: "json",
-                success: function (response) {
-                    $("#district").html(response.res);
-                }
-            });
-        });
-
-        $(document).on('change', '#district', function () {
-            let id = $(this).val();
-            $.ajax({
-                type: "get",
-                url: `{{url('/getKelurahan')}}/${id}`,
-                dataType: "json",
-                success: function (response) {
-                    $("#villages").html(response.res);
-                }
-            });
-        });
-
         $(document).on('change', '#province2', function () {
             let id = $(this).val();
             $.ajax({
@@ -332,28 +340,99 @@ Abon Alfitri | Checkout
             });
         });
 
-        $(document).on('change', '#regency2', function () {
-            let id = $(this).val();
-            $.ajax({
-                type: "get",
-                url: `{{url('/getKecamatan')}}/${id}`,
-                dataType: "json",
-                success: function (response) {
-                    $("#district2").html(response.res);
-                }
-            });
+
+        $('select[name="kurir"]').on('change', function () {
+            let token           = $("meta[name='csrf-token']").attr("content");
+            let origin          = $("select[name=province_id]").val();
+            let destination     = $("select[name=regency_id]").val();
+            let courier         = $("select[name=kurir]").val();
+            let weight          = $("input[name=weight]").val();
+
+            if (courier) {
+                jQuery.ajax({
+                    url: "{{ url('/ongkir') }}",
+                    data: {
+                    _token:              token,
+                    city_origin:         origin,
+                    city_destination:    destination,
+                    courier:             courier,
+                    weight:              weight,
+                },
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function (response) {
+                        $('select[name="layanan"]').empty();
+                        $.each(response[0]['costs'], function (key, value) {
+                            $('select[name="layanan"]')
+                                        .append('<option value="' +
+                                        value.cost[0].value + '">' + response[0].code.toUpperCase() + ':' + ' ' + value.service + ' '  + '-' + ' ' + 'Rp ' + ' '  +  ' ' +  value.cost[0].value + ' '  + '-' + ' '  +
+                                        value.cost[0].etd + ' ' + 'Hari' +
+                                            '</option>')
+                            $("#expedisi").val(response[0].code.toUpperCase());
+                        });
+                    }
+                });
+            } else {
+                $('select[name="layanan"]').empty();
+            }
         });
 
-        $(document).on('change', '#district2', function () {
-            let id = $(this).val();
-            $.ajax({
-                type: "get",
-                url: `{{url('/getKelurahan')}}/${id}`,
-                dataType: "json",
-                success: function (response) {
-                    $("#villages2").html(response.res);
-                }
-            });
+        $('select[name="layanan"]').on('change', function () {
+            let token      = $("meta[name='csrf-token']").attr("content");
+            let layanan    = $("select[name=layanan]").val();
+
+            jQuery.ajax({
+            url: "{{ url('/getTotalOngkir') }}",
+            data: {
+            _token:              token,
+            layanan:            layanan
+            },
+            type: 'POST',
+            dataType: 'json',
+            success: function (response) {
+                $(".ongkir").html(response.ongkir);
+                $(".totalKirim").html(response.totalKirim);
+                $("#totalpayment").val(response.totalpayment);
+                $("#ongkirValue").val(response.layanan);
+            }
+        });
+
+        });
+
+        $('select[name="kurir2"]').on('change', function () {
+            let token           = $("meta[name='csrf-token']").attr("content");
+            let origin          = $("select[name=province_id2]").val();
+            let destination     = $("select[name=regency_id2]").val();
+            let courier         = $("select[name=kurir2]").val();
+            let weight          = $("input[name=weight2]").val();
+
+            if (courier) {
+                jQuery.ajax({
+                    url: "{{ url('/ongkir') }}",
+                    data: {
+                    _token:              token,
+                    city_origin:         origin,
+                    city_destination:    destination,
+                    courier:             courier,
+                    weight:              weight,
+                },
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function (response) {
+                        $('select[name="layanan2"]').empty();
+                        $.each(response[0]['costs'], function (key, value) {
+                            $('select[name="layanan2"]')
+                                        .append('<option value="' +
+                                        value.cost[0].value + '">' + response[0].code.toUpperCase() + ':' + ' ' + value.service + ' '  + '-' + ' ' + 'Rp ' + ' '  +  ' ' +  value.cost[0].value + ' '  + '-' + ' '  +
+                                        value.cost[0].etd + ' ' + 'Hari' +
+                                            '</option>')
+                            $("#expedisi").val(response[0].code.toUpperCase());
+                        });
+                    }
+                });
+            } else {
+                $('select[name="layanan2"]').empty();
+            }
         });
 
         function reset() {
@@ -378,12 +457,11 @@ Abon Alfitri | Checkout
                 cache: false,
                 contentType: false,
                 processData: false,
-                beforeSend: function()
-                {
+                beforeSend: function () {
                     Swal.fire({
                         icon: 'warning',
                         title: 'Mohon Tunggu !',
-                        html: 'Checkout...',// add html attribute if you want or remove
+                        html: 'Checkout...', // add html attribute if you want or remove
                         allowOutsideClick: false,
                         onBeforeOpen: () => {
                             Swal.showLoading()
@@ -400,8 +478,8 @@ Abon Alfitri | Checkout
                             title: 'Berhasil',
                             text: 'Berhasil Melakukan Pesanan!',
                         });
-                        reset();
-                        window.location.href = `{{ url('orders') }}`;
+                        let orderId = response.orderId;
+                        window.location.href = `{{ url('orders') }}/${orderId}`;
                     } else if (response.status == 3) {
                         Toast.fire({
                             icon: 'warning',

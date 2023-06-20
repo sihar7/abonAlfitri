@@ -48,7 +48,6 @@ ABOUT US
                                                     <tr>
                                                         <th></th>
                                                         <th>Judul</th>
-                                                        <th>Deskripsi</th>
                                                         <th>Image </th>
                                                         <th>Alamat</th>
                                                         <th>Email </th>
@@ -402,10 +401,6 @@ ABOUT US
                 {
                     data: 'name',
                     name: 'name'
-                },
-                {
-                    data: 'description',
-                    name: 'description'
                 },
                 {
                     data: 'image',

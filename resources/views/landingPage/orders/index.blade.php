@@ -20,6 +20,7 @@ Abon Alfitri | Beranda
                                 <th scope="col" class="product-title">#</th>
                                 <th scope="col" class="product-price">Total Harga</th>
                                 <th scope="col" class="product-subtotal">Status Pembayaran</th>
+                                <th scope="col" class="product-subtotal">Jasa Pengiriman</th>
                                 <th scope="col" class="product-status"></th>
                             </tr>
                         </thead>
@@ -41,6 +42,8 @@ Abon Alfitri | Beranda
                                     @else
                                     Kadaluarsa
                                     @endif</td>
+                                    
+                                <td class="product-title"><a href="#">{{ $order->expedisi }}</a>
                                 <td>
                                     @if ($order->payment_status == 2)
                                     <a href="#" data-id="{{ $order->id }}" class="btn btn-danger" data-order="{{ $order->order_number }}" id="buton_generate"><i class="fas fa-download"></i> Invoice</a>

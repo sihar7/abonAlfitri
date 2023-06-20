@@ -350,7 +350,7 @@ class CartController extends Controller
 
     public function clearAll(Request $request)
     {
-        \Cart::clear();
+        \Cart::session(Auth::user()->id)->clear();
         return redirect('/cart');
     }
     
