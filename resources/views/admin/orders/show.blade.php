@@ -31,7 +31,7 @@ ORDER
                                     <a class="nav-link active" data-bs-toggle="tab" href="#home"><i
                                             class="la la-table me-2"></i>Detail Order</a>
                                 </li>
-                                @if ($orderGet->payment_status == 2)
+                                @if ($orderGet->payment_status == 2 || $orderGet->payment_status == 5)
                                     <li class="nav-item">
                                         <a class="nav-link" data-bs-toggle="tab" href="#profile"><i
                                                 class="la la-book me-2"></i>Resi</a>
@@ -103,7 +103,7 @@ ORDER
                                     <div class="pt-4">
                                         <div class="basic-form">
                                             
-                                            @if ($orderGet->payment_status == 2)
+                                            @if ($orderGet->payment_status == 2 || $orderGet->payment_status == 5)
                                             <form class="form-valide-with-icon needs-validation"
                                                 enctype="multipart/form-data" novalidate id="data-master">
                                                 @csrf
@@ -147,4 +147,85 @@ ORDER
 <script src="{{ asset('admin/') }}/vendor/datatables/js/jquery.dataTables.min.js"></script>
 <script src="{{ asset('admin/') }}/js/plugins-init/datatables.init.js"></script>
 <script src="{{ asset('alert/js/sweetalert.js') }}"></script>
+<script>
+    $(document).ready(function () {
+    
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 10000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        });
+
+        $('#data-master').on('submit', function (e) {
+            e.preventDefault();
+            $('#simpan-data').val("Kirim...");
+            $('#simpan-data').attr('disabled', true);
+            let data = $("#data-master").serialize();
+            let datax = new FormData(this);
+            // console.log(data[0].jenis_menu);
+            console.log(data);
+            $.ajax({
+                type: "post",
+                url: "{{url('/admin/orders/shipping')}}",
+                data: datax,
+                dataType: "json",
+                cache: false,
+                contentType: false,
+                processData: false,
+                beforeSend: function () {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Mohon Tunggu !',
+                        html: 'Kirim Resi...', // add html attribute if you want or remove
+                        allowOutsideClick: false,
+                        onBeforeOpen: () => {
+                            Swal.showLoading()
+                        },
+                    });
+                },
+                success: function (response) {
+                    $('#simpan-data').val("Kirim");
+                    $('#simpan-data').removeAttr('disabled');
+                    if (response.status == 1) {
+                        swal.close();
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil',
+                            text: 'Berhasil Mengirim Resi!',
+                        });
+                        reset();
+                        window.location.href = `{{ url('admin/orders') }}`;
+                    } else {
+                        Toast.fire({
+                            icon: 'warning',
+                            title: 'Gagal!'
+                        });
+                    }
+                },
+                error: function (e) {
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'Gagal !'
+                    });
+                    $('#simpan-data').val(`Kirim`);
+                    $('#simpan-data').removeAttr('disabled');
+
+                }
+            });
+        });
+    });
+
+</script>
 @endpush

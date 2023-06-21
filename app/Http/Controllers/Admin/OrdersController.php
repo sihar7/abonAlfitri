@@ -9,6 +9,7 @@ use App\Models\OrderItem;
 use Illuminate\Support\Facades\Auth;
 use Validator,Redirect,Response,File;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Mail;
 class OrdersController extends Controller
 {
     function index(Request $request)
@@ -33,6 +34,8 @@ class OrdersController extends Controller
                         return '<span class="badge badge-info">Bayar Cod</span>'. '&nbsp'. ' <a href="#" data-id="'.$data->id.'" class="btn btn-primary" data-order="'.$data->order_number.'" id="buton_generate"><i class="fas fa-download"></i> Invoice</a>'. '&nbsp'. '<a href="#" class="btn btn-success" data-id="'.$data->id.'" id="buttonAccept"><i class="fa-solid fa-check me-2"></i> Konfirmasi Pembayaran</a>';
                     } elseif($data->payment_status == 4) {
                         return '<span class="badge badge-danger">Dibatalkan</span>';
+                    } elseif($data->payment_status == 6) {
+                        return '<span class="badge badge-success">Sedang Dikirim</span>';
                     } else {
                         return '<span class="badge badge-danger">Kadaluarsa</span>';
                     }
@@ -106,5 +109,48 @@ class OrdersController extends Controller
         $order->payment_status = 2;
         $order->save();
         return response()->json($order);
+    }
+
+    function shipping(Request $request)
+    {
+        $orders = Order::whereId($request->order_id)->first();
+        $orders->tracking_number = $request->tracking_number;
+        $orders->payment_status = 6;
+        $orders->save();
+
+
+        $order = OrderItem::join('orders', 'order_items.order_id', '=', 'orders.id')
+        ->join('products', 'order_items.product_id', '=', 'products.id')
+        ->select(
+            'orders.*',
+            'order_items.price',
+            'products.name as name_product',
+            'order_items.quantity as quantity_item',
+            'products.description as descriptionn',
+            'products.priceDisc as price_products'
+        )
+        ->where('orders.id', $request->order_id)
+        ->get();
+
+        $namaOrder = OrderItem::join('orders', 'order_items.order_id', '=', 'orders.id')
+        ->join('products', 'order_items.product_id', '=', 'products.id')
+        ->select(
+            'orders.*',
+            'order_items.price',
+            'products.name as name_product'
+        )
+        ->where('orders.id', $request->order_id)
+        ->first();
+
+
+        $user = Order::where('id', $request->order_id)->first();
+        $email = $user->email;
+        Mail::send('landingPage.orders.invoice.index', ['email' => $email, 'order' => $order, 'orderGet' => $namaOrder], function ($message)
+
+        use ($email, $order, $namaOrder) {
+            $message->to($email)->subject('Pesanan Anda Dikirim');
+        });
+
+        return response()->json(['status' => 1], 201);
     }
 }

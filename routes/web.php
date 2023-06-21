@@ -87,6 +87,7 @@ Route::group(['middleware' => ['admin']], function () {
         Route::get('orders/updateStatus/{id}', [OrdersController::class, 'updateStatus']);
         Route::get('orders/updateCancel/{id}', [OrdersController::class, 'updateCancel']);
         Route::get('orders/updateAccept/{id}', [OrdersController::class, 'updateAccept']);
+        Route::post('orders/shipping', [OrdersController::class, 'shipping']);
         
         Route::get('product-list', [ProductsController::class, 'index']);
         Route::get('product-list/edit/{id}', [ProductsController::class, 'edit']);

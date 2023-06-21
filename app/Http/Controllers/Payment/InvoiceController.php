@@ -55,6 +55,7 @@ class InvoiceController extends Controller
         $createPdf = new Invoice;
         $createPdf->fileName = $filename;
         $createPdf->user_id = Auth::user()->id;
+        $createPdf->order_id = $idOrder;
         $createPdf->path = $path;
         $createPdf->save();
 
@@ -99,6 +100,7 @@ class InvoiceController extends Controller
         $createPdf = new Invoice;
         $createPdf->fileName = $filename;
         $createPdf->user_id = $namaOrder->user_id;
+        $createPdf->order_id = $idOrder;
         $createPdf->path = $path;
         $createPdf->save();
 

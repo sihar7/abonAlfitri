@@ -39,6 +39,8 @@ Abon Alfitri | Beranda
                                     Sudah Dibayar
                                     @elseif ($order->payment_status == 5)
                                     Bayar Cod
+                                    @elseif ($order->payment_status == 6)
+                                    Sedang Dikirim
                                     @else
                                     Kadaluarsa
                                     @endif</td>

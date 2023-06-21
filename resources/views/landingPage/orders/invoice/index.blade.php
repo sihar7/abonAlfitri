@@ -407,6 +407,12 @@
                 <th><span contenteditable>Total Berat</span></th>
                 <td><span contenteditable>{{ $orderGet->weight }} Gram</span></td>
             </tr>
+            @if (!empty($orderGet->tracking_number))
+            <tr>
+                <th><span contenteditable>Resi</span></th>
+                <td><span contenteditable>{{ $orderGet->tracking_number }} Gram</span></td>
+            </tr>
+            @endif
             
         </table>
         <table class="inventory">
@@ -423,7 +429,7 @@
                 @foreach($order as $item)
                 <tr>
                     <td><a class="cut">-</a><span contenteditable>{{ $item->name_product }}</span></td>
-                    <td><span contenteditable>{{ $item->descriptionn }}</span></td>
+                    <td><span contenteditable>{!! html_entity_decode($item->descriptionn) !!}</span></td>
                     <td><span contenteditable> {{ "Rp " . number_format($item->price_products, 0, ",", ".") }}</span></td>
                     <td><span contenteditable>{{ $item->quantity_item }}</span></td>
                     <td><span>{{ "Rp " . number_format($item->price_products * $item->quantity_item, 0, ",", ".") }}</span></td>
