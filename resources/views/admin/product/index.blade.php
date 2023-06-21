@@ -663,9 +663,9 @@ PRODUK
                     $("#slideActiveEdit").val(response.slideActive).change('change');
                     $('#modal-previewEdit').attr('alt', 'No image available');
                     if (response.image) {
-                        $('#modal-previewEdit').attr('src', `{{ URL::to('product/') }}` + response
+                        $('#modal-previewEdit').attr('src', `{{ URL::to('public/product/') }}` + response
                             .image);
-                        $('#hidden_imageEdit').attr('src', `{{ URL::to('product/') }}` + response
+                        $('#hidden_imageEdit').attr('src', `{{ URL::to('public/product/') }}` + response
                             .image);
                     }
                 },

@@ -69,7 +69,7 @@ Abon Alfitri | Home
                         <div class="axil-product product-style-one">
                             <div class="thumbnail">
                                 <a href="{{ url('product/getProduct/details', base64_encode($item->id)) }}">
-                                    <img src="{{ asset('product/'. $item->image)}}" alt="Product Images">
+                                    <img src="{{ asset('product/'. $item->image)}}" alt="Product Images" style="width:255px; height:339px;">
                                 </a>
                                 <div class="product-hover-action">
                                     <ul class="cart-action">
